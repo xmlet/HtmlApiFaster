@@ -1,0 +1,1875 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<xsd:schema xmlns='http://schemas.microsoft.com/intellisense/html-5'
+            xmlns:xsd='http://www.w3.org/2001/XMLSchema'
+            version="1.0"
+            targetNamespace='http://schemas.microsoft.com/intellisense/html-5'>
+
+    <!-- ************************* -->
+    <!--          Elements         -->
+    <!-- ************************* -->
+
+    <xsd:element name="html">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element ref="body"/>
+                <xsd:element ref="head" minOccurs="0"/>
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="manifest" type="xsd:anyURI" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="head">
+        <xsd:complexType>
+            <xsd:group ref="metadataContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="title">
+        <xsd:complexType mixed="true">
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="base">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="href" type="xsd:anyURI"/>
+            <!-- The possible values for target are any valid browsing context name or the values present in the browsingContextType -->
+            <xsd:attribute name="target" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="link">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="href" type="xsd:anyURI"/>
+            <xsd:attribute name="crossorigin" type="crossOriginType"/>
+            <xsd:attribute name="rel" type="relType"/>
+            <xsd:attribute name="rev" type="revType"/>
+            <xsd:attribute name="media" type="mediaType" default="screen" />
+            <xsd:attribute name="nonce" type="xsd:string"/>
+            <xsd:attribute name="hreflang" type="xsd:string"/>
+            <xsd:attribute name="type" type="contentType"/>
+            <xsd:attribute name="referrerpolicy" type="xsd:string"/>
+            <xsd:attribute name="sizes" type="sizesType"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="meta">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="charset" type="xsd:string" />
+            <xsd:attribute name="content" type="xsd:string"/>
+            <xsd:attribute name="http-equiv" type="httpEquivType"/>
+            <xsd:attribute name="name" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="style">
+        <xsd:complexType mixed="true">
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="media" type="mediaType" default="screen" />
+            <xsd:attribute name="nonce" type="xsd:string"/>
+            <xsd:attribute name="type" type="contentType" default="text/css"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="script">
+        <xsd:complexType mixed="true">
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="src" type="xsd:anyURI" />
+            <xsd:attribute name="type" type="scriptType" use="required"/>
+            <xsd:attribute name="charset" type="xsd:string" />
+            <xsd:attribute name="async" type="xsd:boolean"/>
+            <xsd:attribute name="defer" type="xsd:boolean"/>
+            <xsd:attribute name="nonce" type="xsd:string"/>
+            <xsd:attribute name="crossorigin" type="crossOriginType"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="noscript">
+        <xsd:complexType mixed="true">
+            <xsd:group ref="transparentContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="body">
+        <xsd:complexType>
+            <xsd:group ref="flowContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="onafterprint" type="xsd:string"/>
+            <xsd:attribute name="onbeforeprint" type="xsd:string"/>
+            <xsd:attribute name="onbeforeunload" type="xsd:string"/>
+            <xsd:attribute name="onhashchange" type="xsd:string"/>
+            <xsd:attribute name="onlanguagechange" type="xsd:string"/>
+            <xsd:attribute name="onmessage" type="xsd:string"/>
+            <xsd:attribute name="onoffline" type="xsd:string"/>
+            <xsd:attribute name="ononline" type="xsd:string"/>
+            <xsd:attribute name="onpagehide" type="xsd:string"/>
+            <xsd:attribute name="onpageshow" type="xsd:string"/>
+            <xsd:attribute name="onpopstate" type="xsd:string"/>
+            <xsd:attribute name="onrejectionhandled" type="xsd:string"/>
+            <xsd:attribute name="onstorage" type="xsd:string"/>
+            <xsd:attribute name="onunhandledrejection" type="xsd:string"/>
+            <xsd:attribute name="onunload" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="section" type="simpleFlowContentElement" />
+
+    <xsd:element name="nav" type="simpleMainLessFlowContentElement" />
+
+    <xsd:element name="article" type="simpleMainLessFlowContentElement" />
+
+    <xsd:element name="aside" type="simpleMainLessFlowContentElement" />
+
+    <xsd:element name="h1" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="h2" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="h3" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="h4" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="h5" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="h6" type="simplePhrasingContentElement"/>
+
+    <!-- Should be Flow content, but with no main element descendants, or header, footer elements
+    that are not descendants of sectioning content which is a descendant of the header.  -->
+    <xsd:element name="header" type="simpleFlowContentElement"/>
+
+    <!-- Should be Flow content, but with no main element descendants, or header, footer elements
+    that are not descendants of sectioning content which is a descendant of the footer.  -->
+    <xsd:element name="footer" type="simpleFlowContentElement"/>
+
+    <!-- Should be Flow content, but with no heading content descendants, no sectioning content
+    descendants, and no header, footer, or address element descendants.   -->
+    <xsd:element name="address" type="simpleFlowContentElement"/>
+
+    <xsd:element name="p" type="simplePhrasingContentElement" />
+
+    <xsd:element name="br">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="pre" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="dialog">
+        <xsd:complexType>
+            <xsd:group ref="flowContent"/>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="open" type="xsd:boolean" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="blockquote">
+        <xsd:complexType mixed="true">
+            <xsd:group ref="flowContent"/>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="cite" type="xsd:anyURI" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="ol">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element ref="li" />
+            </xsd:all>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="type" type="olType"/>
+            <xsd:attribute name="start" type="xsd:int"/>
+            <xsd:attribute name="reversed" type="xsd:boolean" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="ul">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element ref="li" />
+            </xsd:all>
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="li" >
+        <xsd:complexType mixed="true">
+            <xsd:group ref="flowContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="value" type="xsd:int"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="dl">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element ref="dd" />
+                <xsd:element ref="dt" />
+                <xsd:element ref="div" />
+            </xsd:all>
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="dt" >
+        <xsd:complexType mixed="true">
+            <xsd:group ref="altFlowContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="dd">
+        <xsd:complexType mixed="true">
+            <xsd:group ref="flowContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="a">
+        <xsd:complexType mixed="true">
+            <xsd:group ref="transparentContentWithoutA" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="href" type="xsd:anyURI"/>
+            <!-- The possible values for target are any valid browsing context name or the values present in the browsingContextType -->
+            <xsd:attribute name="target" type="xsd:string"/>
+            <xsd:attribute name="download" type="xsd:string"/>
+            <xsd:attribute name="rel" type="relType"/>
+            <xsd:attribute name="rev" type="revType"/>
+            <xsd:attribute name="hreflang" type="xsd:string"/>
+            <xsd:attribute name="type" type="simpleContentType"/>
+            <xsd:attribute name="referrerpolicy" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="em" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="strong" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="small" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="cite" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="q">
+        <xsd:complexType mixed="true">
+            <xsd:group ref="phrasingContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="cite" type="xsd:anyURI" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="dfn" type="simplePhrasingContentElement" >
+        <xsd:complexType>
+            <xsd:group ref="phrasingContentWithoutDfn"/>
+            <xsd:attributeGroup ref="globalAttributes"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="abbr" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="code" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="var" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="samp" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="kbd" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="sub" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="sup" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="i" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="b" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="mark" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="progress">
+        <xsd:complexType mixed="true">
+            <xsd:group ref="phrasingContentWithoutProgress" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="value" type="xsd:double" />
+            <xsd:attribute name="max" type="xsd:double" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="meter">
+        <xsd:complexType mixed="true">
+            <xsd:group ref="phrasingContentWithoutMeter" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="value" type="xsd:double" />
+            <xsd:attribute name="min" type="xsd:double" />
+            <xsd:attribute name="max" type="xsd:double" />
+            <xsd:attribute name="low" type="xsd:double" />
+            <xsd:attribute name="high" type="xsd:double" />
+            <xsd:attribute name="optimum" type="xsd:double" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- Should only have PhrasingContent if the element has a datetime attribute. -->
+    <xsd:element name="time" >
+        <xsd:complexType mixed="true">
+            <xsd:group ref="phrasingContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="datetime" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="ruby">
+        <xsd:complexType mixed="true">
+            <xsd:choice>
+                <xsd:group ref="phrasingContent" />
+                <xsd:element ref="rt" />
+                <xsd:element ref="rp" />
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="rt" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="rtc">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:group ref="phrasingContent"/>
+                <xsd:element ref="rt"/>
+                <xsd:element ref="rp"/>
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="rb" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="rp" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="bdo" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="span" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="ins" >
+        <xsd:complexType mixed="true">
+            <xsd:group ref="transparentContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="cite" type="xsd:anyURI" />
+            <xsd:attribute name="datetime" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="del" >
+        <xsd:complexType mixed="true">
+            <xsd:group ref="transparentContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="cite" type="xsd:anyURI" />
+            <xsd:attribute name="datetime" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="figcaption" type="simpleFlowContentElement" />
+
+    <xsd:element name="figure" >
+        <xsd:complexType mixed="true">
+            <xsd:choice>
+                <xsd:group ref="flowContent" />
+                <xsd:element name="figcaption" minOccurs="0"/>
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="img">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="alt" type="xsd:string" use="required" />
+            <xsd:attribute name="src" type="xsd:anyURI" use="required"/>
+            <xsd:attribute name="srcset" type="xsd:anyURI"/>
+            <xsd:attribute name="sizes" type="sizesType"/>
+            <xsd:attribute name="crossorigin" type="crossOriginType"/>
+            <xsd:attribute name="usemap" type="xsd:string"/>
+            <xsd:attribute name="ismap" type="xsd:boolean" />
+            <xsd:attribute name="width" type="xsd:long" />
+            <xsd:attribute name="height" type="xsd:long" />
+            <xsd:attribute name="referrerpolicy" type="xsd:string"/>
+            <xsd:attribute name="longdesc" type="xsd:anyURI"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="iframe" >
+        <xsd:complexType mixed="true">
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="src" type="xsd:anyURI"/>
+            <xsd:attribute name="srcDoc" type="xsd:string"/>
+            <xsd:attribute name="name" type="xsd:string" />
+            <xsd:attribute name="sandbox" type="sandboxType"/>
+            <xsd:attribute name="allowfullscreen" type="xsd:boolean"/>
+            <xsd:attribute name="allowpaymentrequest" type="xsd:boolean"/>
+            <xsd:attribute name="width" type="xsd:string" />
+            <xsd:attribute name="height" type="xsd:string" />
+            <xsd:attribute name="referrerpolicy" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="embed" >
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="src" type="xsd:anyURI"/>
+            <xsd:attribute name="type" type="xsd:string"/>
+            <xsd:attribute name="width" type="xsd:string" />
+            <xsd:attribute name="height" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="object">
+        <xsd:complexType mixed="true">
+            <xsd:choice>
+                <xsd:group ref="transparentContent"/>
+                <xsd:element ref="param"/>
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="data" type="xsd:anyURI" />
+            <xsd:attribute name="type" type="xsd:string"/>
+            <xsd:attribute name="typemustmatch" type="xsd:boolean"/>
+            <xsd:attribute name="name" type="xsd:string" />
+            <xsd:attribute name="form" type="xsd:string"/>
+            <xsd:attribute name="width" type="xsd:string" />
+            <xsd:attribute name="height" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="param">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="name" type="xsd:string" use="required" />
+            <xsd:attribute name="value" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="details" >
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element ref="summary"/>
+                <xsd:group ref="flowContent" />
+            </xsd:sequence>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="open" type="xsd:boolean"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="legend">
+        <xsd:complexType mixed="true">
+            <xsd:choice>
+                <xsd:group ref="headingContent"/>
+                <xsd:group ref="phrasingContent" />
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="div">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:group ref="flowContent"/>
+                <xsd:element ref="dt"/>
+                <xsd:element ref="dd"/>
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="source">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="src" type="xsd:anyURI" />
+            <xsd:attribute name="srcSet" type="xsd:anyURI" />
+            <xsd:attribute name="sizes" type="sizesType" />
+            <xsd:attribute name="type" type="xsd:string"/>
+            <xsd:attribute name="media" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="audio">
+        <xsd:complexType mixed="true">
+            <xsd:choice>
+                <xsd:group ref="transparentContent"/>
+                <xsd:element ref="track"/>
+                <xsd:element ref="source"/>
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="src" type="xsd:anyURI" />
+            <xsd:attribute name="crossorigin" type="crossOriginType"/>
+            <xsd:attribute name="preload" type="xsd:string" />
+            <xsd:attribute name="autoplay" type="xsd:string" />
+            <xsd:attribute name="loop" type="xsd:boolean" />
+            <xsd:attribute name="muted" type="xsd:boolean" />
+            <xsd:attribute name="controls" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="track">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes"/>
+            <xsd:attribute name="kind" type="kindType" />
+            <xsd:attribute name="src" type="xsd:anyURI" />
+            <xsd:attribute name="srclang" type="xsd:string" />
+            <xsd:attribute name="label" type="xsd:string" />
+            <xsd:attribute name="default" type="xsd:boolean" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="video">
+        <xsd:complexType mixed="true">
+            <xsd:choice>
+                <xsd:group ref="transparentContent"/>
+                <xsd:element ref="track"/>
+                <xsd:element ref="source"/>
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="src" type="xsd:anyURI" />
+            <xsd:attribute name="crossorigin" type="crossOriginType"/>
+            <xsd:attribute name="poster" type="xsd:anyURI"/>
+            <xsd:attribute name="preload" type="xsd:string" />
+            <xsd:attribute name="autoplay" type="xsd:string" />
+            <xsd:attribute name="loop" type="xsd:boolean" />
+            <xsd:attribute name="muted" type="xsd:boolean" />
+            <xsd:attribute name="controls" type="xsd:string"/>
+            <xsd:attribute name="width" type="xsd:long"/>
+            <xsd:attribute name="height" type="xsd:long"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="hr">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="form" >
+        <xsd:complexType mixed="true">
+            <xsd:group ref="flowContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="accept-charset" type="xsd:string"/>
+            <xsd:attribute name="action" type="xsd:anyURI" use="required" />
+            <xsd:attribute name="autocomplete" type="autocompleteType"/>
+            <xsd:attribute name="enctype" type="enctypeType"/>
+            <xsd:attribute name="method" type="methodType" default="get"/>
+            <xsd:attribute name="name" type="xsd:string"/>
+            <xsd:attribute name="novalidate" type="xsd:boolean"/>
+            <xsd:attribute name="target" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="fieldset">
+        <xsd:complexType mixed="true">
+            <xsd:choice>
+                <xsd:element ref="legend"/>
+                <xsd:group ref="flowContent" />
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="disabled" type="xsd:boolean"/>
+            <xsd:attribute name="form" type="xsd:string"/>
+            <xsd:attribute name="name" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="label" >
+        <xsd:complexType mixed="true">
+            <xsd:group ref="phrasingContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="for" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="input" >
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="type" type="inputType"/>
+            <xsd:attribute name="accept" type="xsd:string"/>
+            <xsd:attribute name="alt" type="xsd:string"/>
+            <xsd:attribute name="autocomplete" type="autocompleteType"/>
+            <xsd:attribute name="checked" type="xsd:boolean"/>
+            <xsd:attribute name="dirname" type="xsd:string"/>
+            <xsd:attribute name="disabled" type="xsd:boolean"/>
+            <xsd:attribute name="form" type="xsd:string"/>
+            <xsd:attribute name="formaction" type="xsd:anyURI"/>
+            <xsd:attribute name="formenctype" type="enctypeType"/>
+            <xsd:attribute name="formmethod" type="methodType" default="get"/>
+            <xsd:attribute name="formnovalidate" type="xsd:boolean"/>
+            <xsd:attribute name="formtarget" type="browsingContext"/>
+            <xsd:attribute name="height" type="xsd:long"/>
+            <xsd:attribute name="list" type="xsd:string"/>
+            <xsd:attribute name="max" type="xsd:string"/>
+            <xsd:attribute name="maxlength" type="xsd:long"/>
+            <xsd:attribute name="min" type="xsd:string"/>
+            <xsd:attribute name="minlength" type="xsd:long"/>
+            <xsd:attribute name="name" type="xsd:string"/>
+            <xsd:attribute name="multiple" type="xsd:boolean"/>
+            <xsd:attribute name="pattern" type="xsd:string"/>
+            <xsd:attribute name="placeholder" type="xsd:string"/>
+            <xsd:attribute name="readonly" type="xsd:boolean"/>
+            <xsd:attribute name="required" type="xsd:boolean"/>
+            <xsd:attribute name="size" type="xsd:long"/>
+            <xsd:attribute name="src" type="xsd:anyURI"/>
+            <xsd:attribute name="step" type="xsd:string"/>
+            <xsd:attribute name="width" type="xsd:long"/>
+            <xsd:attribute name="value" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- Should be PhrasingContent without interactive content -->
+    <xsd:element name="button">
+        <xsd:complexType mixed="true">
+            <xsd:group ref="phrasingContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="autofocus" type="xsd:boolean"/>
+            <xsd:attribute name="disabled" type="xsd:boolean"/>
+            <xsd:attribute name="form" type="xsd:string"/>
+            <xsd:attribute name="formaction" type="xsd:anyURI"/>
+            <xsd:attribute name="formenctype" type="enctypeType"/>
+            <xsd:attribute name="formmethod" type="methodType" default="get"/>
+            <xsd:attribute name="formnovalidate" type="xsd:boolean"/>
+            <xsd:attribute name="formtarget" type="xsd:string"/>
+            <xsd:attribute name="name" type="xsd:string"/>
+            <xsd:attribute name="value" type="xsd:string"/>
+            <xsd:attribute name="type" type="buttonType" default="submit"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="select">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element ref="option" />
+                <xsd:element ref="optgroup" />
+            </xsd:all>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="autoComplete" type="xsd:string"/>
+            <xsd:attribute name="autofocus" type="xsd:boolean"/>
+            <xsd:attribute name="disabled" type="xsd:boolean"/>
+            <xsd:attribute name="form" type="xsd:string"/>
+            <xsd:attribute name="multiple" type="xsd:boolean"/>
+            <xsd:attribute name="name" type="xsd:string"/>
+            <xsd:attribute name="size" type="xsd:long"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="datalist">
+        <xsd:complexType>
+            <xsd:choice >
+                <xsd:element ref="option" />
+                <xsd:group ref="phrasingContent" />
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="optgroup">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element ref="option" />
+            </xsd:all>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="disabled" type="xsd:boolean"/>
+            <xsd:attribute name="label" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="option" >
+        <xsd:complexType mixed="true">
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="disabled" type="xsd:boolean"/>
+            <xsd:attribute name="selected" type="xsd:boolean"/>
+            <xsd:attribute name="label" type="xsd:string"/>
+            <xsd:attribute name="value" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="textarea">
+        <xsd:complexType mixed="true">
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="autoComplete" type="xsd:string"/>
+            <xsd:attribute name="autofocus" type="xsd:boolean"/>
+            <xsd:attribute name="cols" type="xsd:long" use="required"/>
+            <xsd:attribute name="dirName" type="xsd:string"/>
+            <xsd:attribute name="disabled" type="xsd:boolean"/>
+            <xsd:attribute name="form" type="xsd:string"/>
+            <xsd:attribute name="maxlength" type="xsd:long"/>
+            <xsd:attribute name="minlength" type="xsd:long"/>
+            <xsd:attribute name="name" type="xsd:string"/>
+            <xsd:attribute name="placeholder" type="xsd:string"/>
+            <xsd:attribute name="readonly" type="xsd:boolean"/>
+            <xsd:attribute name="required" type="xsd:boolean"/>
+            <xsd:attribute name="rows" type="xsd:long" use="required" />
+            <xsd:attribute name="wrap" type="wrapType"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="output">
+        <xsd:complexType mixed="true">
+            <xsd:group ref="phrasingContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="for" type="xsd:string"/>
+            <xsd:attribute name="form" type="xsd:string"/>
+            <xsd:attribute name="name" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="canvas" >
+        <xsd:complexType mixed="true">
+            <xsd:group ref="transparentContent"/>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="width" type="xsd:long" />
+            <xsd:attribute name="height" type="xsd:long" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="map" >
+        <xsd:complexType>
+            <xsd:group ref="transparentContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="name" type="xsd:string" use="required" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="area">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="alt" type="xsd:string" use="required"/>
+            <xsd:attribute name="coords" type="xsd:string" use="required"/>
+            <xsd:attribute name="download" type="xsd:string" use="required"/>
+            <xsd:attribute name="href" type="xsd:anyURI"/>
+            <xsd:attribute name="hreflang" type="xsd:string"/>
+            <xsd:attribute name="rel" type="relType" />
+            <xsd:attribute name="shape" type="shapeType" default="rect" />
+            <xsd:attribute name="target" type="xsd:string" />
+            <xsd:attribute name="type" type="xsd:string"/>
+            <xsd:attribute name="referrerpolicy" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="math">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="display" type="displayType" default="inline"/>
+            <xsd:attribute name="maxwidth" type="xsd:long"/>
+            <xsd:attribute name="overflow" type="overflowType" default="linebreak"/>
+            <xsd:attribute name="altimg" type="xsd:anyURI"/>
+            <xsd:attribute name="altimg-width" type="xsd:long"/>
+            <xsd:attribute name="altimg-heigth" type="xsd:long"/>
+            <!-- Deveria suportar longs e um enum com top middle e bottom. -->
+            <xsd:attribute name="altimg-valign" type="xsd:long"/>
+            <xsd:attribute name="alttext" type="xsd:string"/>
+            <xsd:attribute name="cdgroup" type="xsd:anyURI"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="svg">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="x" type="xsd:long"/>
+            <xsd:attribute name="y" type="xsd:long"/>
+            <xsd:attribute name="width" type="xsd:long"/>
+            <xsd:attribute name="height" type="xsd:long"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="table" >
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:element ref="caption" minOccurs="0"/>
+                <xsd:element ref="colgroup" />
+                <xsd:element ref="thead" minOccurs="0"/>
+                <xsd:element ref="tfoot" minOccurs="0"/>
+                <xsd:element ref="tbody" />
+                <xsd:element ref="tr" />
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="border" type="borderType" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- Should be FlowContent without table descendants -->
+    <xsd:element name="caption" type="simpleFlowContentElement"/>
+
+    <xsd:element name="colgroup">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element ref="col" />
+                <xsd:element ref="template" />
+            </xsd:all>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="span" type="xsd:long" default="1" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="col">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="span" type="xsd:long" default="1" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="tbody" >
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element ref="tr" />
+            </xsd:all>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="rowgroup" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="thead" >
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element ref="tr" />
+            </xsd:all>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="rowgroup" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="tfoot" >
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element ref="tr" />
+            </xsd:all>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="rowgroup" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="tr" >
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element ref="th"/>
+                <xsd:element ref="td" />
+            </xsd:all>
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="row" type="xsd:long"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="td" >
+        <xsd:complexType mixed="true">
+            <xsd:group ref="flowContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="headers" type="xsd:string" />
+            <xsd:attribute name="rowspan" default="1" type="xsd:positiveInteger" />
+            <xsd:attribute name="colspan" default="1" type="xsd:positiveInteger" />
+            <xsd:attribute name="cell" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="th" >
+        <xsd:complexType mixed="true">
+            <xsd:group ref="altFlowContent" />
+            <xsd:attributeGroup ref="globalAttributes" />
+            <xsd:attribute name="headers" type="xsd:string" />
+            <xsd:attribute name="rowspan" default="1" type="xsd:positiveInteger" />
+            <xsd:attribute name="colspan" default="1" type="xsd:positiveInteger" />
+            <xsd:attribute name="columnheader" type="xsd:string"/>
+            <xsd:attribute name="rowheader" type="xsd:string"/>
+            <xsd:attribute name="abbr" type="xsd:string"/>
+            <xsd:attribute name="scope" type="scopeType" />
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="main" type="simpleFlowContentElement"/>
+
+    <xsd:element name="template">
+        <xsd:complexType>
+            <xsd:group ref="transparentContent"/>
+            <xsd:attributeGroup ref="globalAttributes"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="bdi" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="data">
+        <xsd:complexType>
+            <xsd:group ref="phrasingContent"/>
+            <xsd:attributeGroup ref="globalAttributes"/>
+            <xsd:attribute name="value" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="s" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="u" type="simplePhrasingContentElement"/>
+
+    <xsd:element name="wbr">
+        <xsd:complexType>
+            <xsd:attributeGroup ref="globalAttributes"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="picture">
+        <xsd:complexType>
+            <xsd:all>
+                <xsd:element ref="source"/>
+                <xsd:element ref="img"/>
+            </xsd:all>
+            <xsd:attributeGroup ref="globalAttributes"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="summary">
+        <xsd:complexType>
+            <xsd:choice>
+                <xsd:group ref="phrasingContent"/>
+                <xsd:group ref="headingContent"/>
+            </xsd:choice>
+            <xsd:attributeGroup ref="globalAttributes"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <!-- ************************* -->
+    <!--      Explicit Types       -->
+    <!-- ************************* -->
+
+    <xsd:simpleType name="mediaType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="all" />
+            <xsd:enumeration value="print" />
+            <xsd:enumeration value="screen" />
+            <xsd:enumeration value="speech" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="relType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="alternate" />
+            <xsd:enumeration value="author" />
+            <xsd:enumeration value="help" />
+            <xsd:enumeration value="icon" />
+            <xsd:enumeration value="license" />
+            <xsd:enumeration value="next" />
+            <xsd:enumeration value="prev" />
+            <xsd:enumeration value="search" />
+            <xsd:enumeration value="stylesheet" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="revType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="alternate" />
+            <xsd:enumeration value="appendix" />
+            <xsd:enumeration value="bookmark" />
+            <xsd:enumeration value="chapter" />
+            <xsd:enumeration value="contents" />
+            <xsd:enumeration value="copyright" />
+            <xsd:enumeration value="glossary" />
+            <xsd:enumeration value="help" />
+            <xsd:enumeration value="index" />
+            <xsd:enumeration value="next" />
+            <xsd:enumeration value="prev" />
+            <xsd:enumeration value="section" />
+            <xsd:enumeration value="start" />
+            <xsd:enumeration value="stylesheet" />
+            <xsd:enumeration value="subsection" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- DO NOT DELETE. Even if it isn't referred it can be used in target types -->
+    <xsd:simpleType name="browsingContext">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="_blank" />
+            <xsd:enumeration value="_parent" />
+            <xsd:enumeration value="_self" />
+            <xsd:enumeration value="_top" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="contentType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="text/asp" />
+            <xsd:enumeration value="text/asa" />
+            <xsd:enumeration value="text/css" />
+            <xsd:enumeration value="text/html" />
+            <xsd:enumeration value="text/javascript" />
+            <xsd:enumeration value="text/plain" />
+            <xsd:enumeration value="text/scriptlet" />
+            <xsd:enumeration value="text/x-component" />
+            <xsd:enumeration value="text/x-html-insertion" />
+            <xsd:enumeration value="text/xml" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="simpleContentType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="text/asp" />
+            <xsd:enumeration value="text/asa" />
+            <xsd:enumeration value="text/html" />
+            <xsd:enumeration value="text/plain" />
+            <xsd:enumeration value="text/xml" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="simpleFlowContentElement" mixed="true">
+        <xsd:group ref="flowContent" />
+        <xsd:attributeGroup ref="globalAttributes" />
+    </xsd:complexType>
+
+    <xsd:complexType name="simplePhrasingContentElement" mixed="true">
+        <xsd:group ref="phrasingContent" />
+        <xsd:attributeGroup ref="globalAttributes" />
+    </xsd:complexType>
+
+    <xsd:complexType name="simpleMainLessFlowContentElement" mixed="true">
+        <xsd:group ref="mainLessFlowContent" />
+        <xsd:attributeGroup ref="globalAttributes" />
+    </xsd:complexType>
+
+    <xsd:simpleType name="crossOriginType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="anonymous"/>
+            <xsd:enumeration value="use-credentials"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="scriptType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="application/ecmascript" />
+            <xsd:enumeration value="application/javascript" />
+            <xsd:enumeration value="application/x-javascript" />
+            <xsd:enumeration value="application/x-ecmascript" />
+            <xsd:enumeration value="text/ecmascript" />
+            <xsd:enumeration value="text/javascript" />
+            <xsd:enumeration value="text/javascript1.0" />
+            <xsd:enumeration value="text/javascript1.1" />
+            <xsd:enumeration value="text/javascript1.2" />
+            <xsd:enumeration value="text/javascript1.3" />
+            <xsd:enumeration value="text/javascript1.4" />
+            <xsd:enumeration value="text/javascript1.5" />
+            <xsd:enumeration value="text/jscript" />
+            <xsd:enumeration value="text/livescript" />
+            <xsd:enumeration value="text/x-javascript" />
+            <xsd:enumeration value="text/x-ecmascript" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="olType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="1"/>
+            <xsd:enumeration value="a"/>
+            <xsd:enumeration value="A"/>
+            <xsd:enumeration value="i"/>
+            <xsd:enumeration value="I"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="kindType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="subtitles"/>
+            <xsd:enumeration value="captions"/>
+            <xsd:enumeration value="descriptions"/>
+            <xsd:enumeration value="chapters"/>
+            <xsd:enumeration value="metadata"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="autocompleteType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="yes"/>
+            <xsd:enumeration value="no"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="enctypeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="multipart/form-data" />
+            <xsd:enumeration value="application/x-www-form-urlencoded" />
+            <xsd:enumeration value="text/plain" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="methodType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="get" />
+            <xsd:enumeration value="post" />
+            <xsd:enumeration value="dialog" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="inputType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="button" />
+            <xsd:enumeration value="checkbox" />
+            <xsd:enumeration value="color" />
+            <xsd:enumeration value="date" />
+            <xsd:enumeration value="datetime-local" />
+            <xsd:enumeration value="email" />
+            <xsd:enumeration value="file" />
+            <xsd:enumeration value="hidden" />
+            <xsd:enumeration value="image" />
+            <xsd:enumeration value="month" />
+            <xsd:enumeration value="number" />
+            <xsd:enumeration value="password" />
+            <xsd:enumeration value="radio" />
+            <xsd:enumeration value="range" />
+            <xsd:enumeration value="reset" />
+            <xsd:enumeration value="search" />
+            <xsd:enumeration value="submit" />
+            <xsd:enumeration value="text" />
+            <xsd:enumeration value="tel" />
+            <xsd:enumeration value="time" />
+            <xsd:enumeration value="url" />
+            <xsd:enumeration value="week" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="buttonType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="button" />
+            <xsd:enumeration value="reset" />
+            <xsd:enumeration value="submit" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="wrapType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="hard"/>
+            <xsd:enumeration value="soft" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="shapeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="rect" />
+            <xsd:enumeration value="circle" />
+            <xsd:enumeration value="poly" />
+            <xsd:enumeration value="default" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="displayType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="block"/>
+            <xsd:enumeration value="inline"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="overflowType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="linebreak"/>
+            <xsd:enumeration value="scroll"/>
+            <xsd:enumeration value="elide"/>
+            <xsd:enumeration value="truncate"/>
+            <xsd:enumeration value="scale"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="scopeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="col" />
+            <xsd:enumeration value="colgroup" />
+            <xsd:enumeration value="row" />
+            <xsd:enumeration value="rowgroup" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="dirType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ltr" />
+            <xsd:enumeration value="rtl" />
+            <xsd:enumeration value="auto" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="contenteditableType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="" />
+            <xsd:enumeration value="true" />
+            <xsd:enumeration value="false" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="draggableType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="true" />
+            <xsd:enumeration value="false" />
+            <xsd:enumeration value="auto" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="spellcheckType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="" />
+            <xsd:enumeration value="true" />
+            <xsd:enumeration value="false" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="translateType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value=""/>
+            <xsd:enumeration value="yes"/>
+            <xsd:enumeration value="no"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="sizesType">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d*x\d*"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="httpEquivType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="content-language" />
+            <xsd:enumeration value="content-type" />
+            <xsd:enumeration value="default-style" />
+            <xsd:enumeration value="refresh" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="sandboxType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="allow-forms" />
+            <xsd:enumeration value="allow-pointer-lock" />
+            <xsd:enumeration value="allow-popups" />
+            <xsd:enumeration value="allow-presentation" />
+            <xsd:enumeration value="allow-same-origin" />
+            <xsd:enumeration value="allow-scripts" />
+            <xsd:enumeration value="allow-top-navigation" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="borderType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="0"/>
+            <xsd:enumeration value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <!-- ************************* -->
+    <!--      Attribute Groups     -->
+    <!-- ************************* -->
+
+    <xsd:attributeGroup name="globalEventAttributes" >
+        <xsd:attribute name="onabort" type="xsd:string"/>
+        <xsd:attribute name="onauxclick" type="xsd:string"/>
+        <xsd:attribute name="onblur" type="xsd:string"/>
+        <xsd:attribute name="oncancel" type="xsd:string"/>
+        <xsd:attribute name="oncanplay" type="xsd:string"/>
+        <xsd:attribute name="oncanplaythrough" type="xsd:string"/>
+        <xsd:attribute name="onchange" type="xsd:string"/>
+        <xsd:attribute name="onclick" type="xsd:string"/>
+        <xsd:attribute name="onclose" type="xsd:string"/>
+        <xsd:attribute name="oncuechange" type="xsd:string"/>
+        <xsd:attribute name="ondblclick" type="xsd:string"/>
+        <xsd:attribute name="ondrag" type="xsd:string"/>
+        <xsd:attribute name="ondragend" type="xsd:string"/>
+        <xsd:attribute name="ondragenter" type="xsd:string"/>
+        <xsd:attribute name="ondragexit" type="xsd:string"/>
+        <xsd:attribute name="ondragleave" type="xsd:string"/>
+        <xsd:attribute name="ondragover" type="xsd:string"/>
+        <xsd:attribute name="ondragstart" type="xsd:string"/>
+        <xsd:attribute name="ondrop" type="xsd:string"/>
+        <xsd:attribute name="ondurationchange" type="xsd:string"/>
+        <xsd:attribute name="onemptied" type="xsd:string"/>
+        <xsd:attribute name="onended" type="xsd:string"/>
+        <xsd:attribute name="onerror" type="xsd:string"/>
+        <xsd:attribute name="onfocus" type="xsd:string"/>
+        <xsd:attribute name="oninput" type="xsd:string"/>
+        <xsd:attribute name="oninvalid" type="xsd:string"/>
+        <xsd:attribute name="onkeydown" type="xsd:string"/>
+        <xsd:attribute name="onkeypress" type="xsd:string"/>
+        <xsd:attribute name="onkeyup" type="xsd:string"/>
+        <xsd:attribute name="onload" type="xsd:string"/>
+        <xsd:attribute name="onloadeddata" type="xsd:string"/>
+        <xsd:attribute name="onloadedmetadata" type="xsd:string"/>
+        <xsd:attribute name="onloadend" type="xsd:string"/>
+        <xsd:attribute name="onloadstart" type="xsd:string"/>
+        <xsd:attribute name="onmousedown" type="xsd:string"/>
+        <xsd:attribute name="onmouseenter" type="xsd:string"/>
+        <xsd:attribute name="onmouseleave" type="xsd:string"/>
+        <xsd:attribute name="onmousemove" type="xsd:string"/>
+        <xsd:attribute name="onmouseout" type="xsd:string"/>
+        <xsd:attribute name="onmouseover" type="xsd:string"/>
+        <xsd:attribute name="onmouseup" type="xsd:string"/>
+        <xsd:attribute name="onwheel" type="xsd:string"/>
+        <xsd:attribute name="onpause" type="xsd:string"/>
+        <xsd:attribute name="onplay" type="xsd:string"/>
+        <xsd:attribute name="onplaying" type="xsd:string"/>
+        <xsd:attribute name="onprogress" type="xsd:string"/>
+        <xsd:attribute name="onratechange" type="xsd:string"/>
+        <xsd:attribute name="onreset" type="xsd:string"/>
+        <xsd:attribute name="onresize" type="xsd:string"/>
+        <xsd:attribute name="onscroll" type="xsd:string"/>
+        <xsd:attribute name="onseeked" type="xsd:string"/>
+        <xsd:attribute name="onseeking" type="xsd:string"/>
+        <xsd:attribute name="onselect" type="xsd:string"/>
+        <xsd:attribute name="onshow" type="xsd:string"/>
+        <xsd:attribute name="onstalled" type="xsd:string"/>
+        <xsd:attribute name="onsubmit" type="xsd:string"/>
+        <xsd:attribute name="onsuspend" type="xsd:string"/>
+        <xsd:attribute name="ontimeupdate" type="xsd:string"/>
+        <xsd:attribute name="ontoogle" type="xsd:string"/>
+        <xsd:attribute name="onvolumenchange" type="xsd:string"/>
+        <xsd:attribute name="onwaiting" type="xsd:string"/>
+    </xsd:attributeGroup>
+
+    <xsd:attributeGroup name="globalAttributes">
+        <xsd:attributeGroup ref="globalEventAttributes"/>
+        <xsd:attribute name="accesskey" type="xsd:string" />
+        <xsd:attribute name="class" type="xsd:string" />
+        <xsd:attribute name="contenteditable" type="contenteditableType"/>
+        <xsd:attribute name="dir" type="dirType" default="ltr"/>
+        <xsd:attribute name="draggable" type="draggableType"/>
+        <xsd:attribute name="hidden" type="xsd:boolean" />
+        <xsd:attribute name="id" type="xsd:string"/>
+        <xsd:attribute name="lang" type="xsd:string"/>
+        <xsd:attribute name="spellcheck" type="spellcheckType"/>
+        <xsd:attribute name="style" type="xsd:string"/>
+        <xsd:attribute name="tabIndex" type="xsd:int" />
+        <xsd:attribute name="title" type="xsd:string"/>
+        <xsd:attribute name="translate" type="translateType" />
+    </xsd:attributeGroup>
+
+    <!-- ************************* -->
+    <!--         Groups            -->
+    <!-- ************************* -->
+
+    <xsd:group name="interactiveContent">
+        <xsd:all>
+            <xsd:element ref="a"/>
+            <xsd:element ref="audio"/>
+            <xsd:element ref="button"/>
+            <xsd:element ref="details"/>
+            <xsd:element ref="embed"/>
+            <xsd:element ref="iframe"/>
+            <xsd:element ref="img"/>
+            <xsd:element ref="input"/>
+            <xsd:element ref="label"/>
+            <xsd:element ref="select"/>
+            <xsd:element ref="textarea"/>
+            <xsd:element ref="video"/>
+        </xsd:all>
+    </xsd:group>
+
+    <xsd:group name="palpableContent">
+        <xsd:all>
+            <xsd:element ref="a"/>
+            <xsd:element ref="abbr"/>
+            <xsd:element ref="address"/>
+            <xsd:element ref="article"/>
+            <xsd:element ref="aside"/>
+            <xsd:element ref="audio"/>
+            <xsd:element ref="b"/>
+            <xsd:element ref="bdi"/>
+            <xsd:element ref="bdo"/>
+            <xsd:element ref="blockquote"/>
+            <xsd:element ref="button"/>
+            <xsd:element ref="canvas"/>
+            <xsd:element ref="cite"/>
+            <xsd:element ref="code"/>
+            <xsd:element ref="data"/>
+            <xsd:element ref="details"/>
+            <xsd:element ref="dfn"/>
+            <xsd:element ref="div"/>
+            <xsd:element ref="dl"/>
+            <xsd:element ref="em"/>
+            <xsd:element ref="embed"/>
+            <xsd:element ref="fieldset"/>
+            <xsd:element ref="figure"/>
+            <xsd:element ref="footer"/>
+            <xsd:element ref="form"/>
+            <xsd:element ref="h1"/>
+            <xsd:element ref="h2"/>
+            <xsd:element ref="h3"/>
+            <xsd:element ref="h4"/>
+            <xsd:element ref="h5"/>
+            <xsd:element ref="h6"/>
+            <xsd:element ref="header"/>
+            <xsd:element ref="i"/>
+            <xsd:element ref="iframe"/>
+            <xsd:element ref="img"/>
+            <xsd:element ref="input"/>
+            <xsd:element ref="ins"/>
+            <xsd:element ref="kbd"/>
+            <xsd:element ref="label"/>
+            <xsd:element ref="main"/>
+            <xsd:element ref="map"/>
+            <xsd:element ref="mark"/>
+            <xsd:element ref="math"/>
+            <xsd:element ref="meter"/>
+            <xsd:element ref="nav"/>
+            <xsd:element ref="object"/>
+            <xsd:element ref="ol"/>
+            <xsd:element ref="output"/>
+            <xsd:element ref="p"/>
+            <xsd:element ref="pre"/>
+            <xsd:element ref="progress"/>
+            <xsd:element ref="q"/>
+            <xsd:element ref="ruby"/>
+            <xsd:element ref="s"/>
+            <xsd:element ref="samp"/>
+            <xsd:element ref="section"/>
+            <xsd:element ref="select"/>
+            <xsd:element ref="small"/>
+            <xsd:element ref="span"/>
+            <xsd:element ref="strong"/>
+            <xsd:element ref="sub"/>
+            <xsd:element ref="sup"/>
+            <xsd:element ref="svg"/>
+            <xsd:element ref="table"/>
+            <xsd:element ref="textarea"/>
+            <xsd:element ref="time"/>
+            <xsd:element ref="u"/>
+            <xsd:element ref="ul"/>
+            <xsd:element ref="var"/>
+            <xsd:element ref="video"/>
+        </xsd:all>
+    </xsd:group>
+
+    <xsd:group name="transparentContentWithoutA">
+        <xsd:all>
+            <xsd:element ref="html"/>
+            <xsd:element ref="head"/>
+            <xsd:element ref="title"/>
+            <xsd:element ref="base"/>
+            <xsd:element ref="link"/>
+            <xsd:element ref="meta"/>
+            <xsd:element ref="style"/>
+            <xsd:element ref="script"/>
+            <xsd:element ref="noscript"/>
+            <xsd:element ref="body"/>
+            <xsd:element ref="section"/>
+            <xsd:element ref="nav"/>
+            <xsd:element ref="article"/>
+            <xsd:element ref="aside"/>
+            <xsd:element ref="h1"/>
+            <xsd:element ref="h2"/>
+            <xsd:element ref="h3"/>
+            <xsd:element ref="h4"/>
+            <xsd:element ref="h5"/>
+            <xsd:element ref="h6"/>
+            <xsd:element ref="header"/>
+            <xsd:element ref="footer"/>
+            <xsd:element ref="address"/>
+            <xsd:element ref="p"/>
+            <xsd:element ref="br"/>
+            <xsd:element ref="pre"/>
+            <xsd:element ref="dialog"/>
+            <xsd:element ref="blockquote"/>
+            <xsd:element ref="ol"/>
+            <xsd:element ref="ul"/>
+            <xsd:element ref="li"/>
+            <xsd:element ref="dl"/>
+            <xsd:element ref="dt"/>
+            <xsd:element ref="dd"/>
+            <xsd:element ref="em"/>
+            <xsd:element ref="strong"/>
+            <xsd:element ref="small"/>
+            <xsd:element ref="cite"/>
+            <xsd:element ref="q"/>
+            <xsd:element ref="dfn"/>
+            <xsd:element ref="abbr"/>
+            <xsd:element ref="code"/>
+            <xsd:element ref="var"/>
+            <xsd:element ref="samp"/>
+            <xsd:element ref="kbd"/>
+            <xsd:element ref="sub"/>
+            <xsd:element ref="sup"/>
+            <xsd:element ref="i"/>
+            <xsd:element ref="b"/>
+            <xsd:element ref="mark"/>
+            <xsd:element ref="progress"/>
+            <xsd:element ref="meter"/>
+            <xsd:element ref="time"/>
+            <xsd:element ref="ruby"/>
+            <xsd:element ref="rt"/>
+            <xsd:element ref="rtc"/>
+            <xsd:element ref="rb"/>
+            <xsd:element ref="rp"/>
+            <xsd:element ref="bdo"/>
+            <xsd:element ref="span"/>
+            <xsd:element ref="ins"/>
+            <xsd:element ref="del"/>
+            <xsd:element ref="figcaption"/>
+            <xsd:element ref="figure"/>
+            <xsd:element ref="img"/>
+            <xsd:element ref="iframe"/>
+            <xsd:element ref="embed"/>
+            <xsd:element ref="object"/>
+            <xsd:element ref="param"/>
+            <xsd:element ref="details"/>
+            <xsd:element ref="legend"/>
+            <xsd:element ref="div"/>
+            <xsd:element ref="source"/>
+            <xsd:element ref="audio"/>
+            <xsd:element ref="track"/>
+            <xsd:element ref="video"/>
+            <xsd:element ref="hr"/>
+            <xsd:element ref="form"/>
+            <xsd:element ref="fieldset"/>
+            <xsd:element ref="label"/>
+            <xsd:element ref="input"/>
+            <xsd:element ref="button"/>
+            <xsd:element ref="select"/>
+            <xsd:element ref="datalist"/>
+            <xsd:element ref="optgroup"/>
+            <xsd:element ref="option"/>
+            <xsd:element ref="textarea"/>
+            <xsd:element ref="output"/>
+            <xsd:element ref="canvas"/>
+            <xsd:element ref="map"/>
+            <xsd:element ref="area"/>
+            <xsd:element ref="math"/>
+            <xsd:element ref="svg"/>
+            <xsd:element ref="table"/>
+            <xsd:element ref="caption"/>
+            <xsd:element ref="colgroup"/>
+            <xsd:element ref="col"/>
+            <xsd:element ref="tbody"/>
+            <xsd:element ref="thead"/>
+            <xsd:element ref="tfoot"/>
+            <xsd:element ref="tr"/>
+            <xsd:element ref="td"/>
+            <xsd:element ref="th"/>
+            <xsd:element ref="main"/>
+            <xsd:element ref="template"/>
+            <xsd:element ref="bdi"/>
+            <xsd:element ref="data"/>
+            <xsd:element ref="s"/>
+            <xsd:element ref="u"/>
+            <xsd:element ref="wbr"/>
+            <xsd:element ref="picture"/>
+            <xsd:element ref="summary"/>
+        </xsd:all>
+    </xsd:group>
+
+    <xsd:group name="transparentContent">
+        <xsd:choice>
+            <xsd:group ref="transparentContentWithoutA"/>
+            <xsd:element ref="a"/>
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:group name="metadataContent" >
+        <xsd:all>
+            <xsd:element ref="base" />
+            <xsd:element ref="link" />
+            <xsd:element ref="meta" />
+            <xsd:element ref="noscript" />
+            <xsd:element ref="script" />
+            <xsd:element ref="style" />
+            <xsd:element ref="template"/>
+            <xsd:element ref="title"/>
+        </xsd:all>
+    </xsd:group>
+
+    <xsd:group name="mainLessFlowContent" >
+        <xsd:choice>
+            <xsd:group ref="phrasingContent"/>
+            <xsd:element ref="address" />
+            <xsd:element ref="blockquote" />
+            <xsd:element ref="details" />
+            <xsd:element ref="dialog" />
+            <xsd:element ref="div" />
+            <xsd:element ref="dl" />
+            <xsd:element ref="fieldset" />
+            <xsd:element ref="figure" />
+            <xsd:element ref="form" />
+            <xsd:element ref="hr" />
+            <xsd:element ref="meter" />
+            <xsd:element ref="nav" />
+            <xsd:element ref="ol" />
+            <xsd:element ref="p" />
+            <xsd:element ref="section" />
+            <xsd:element ref="style"/>
+            <xsd:element ref="table" />
+            <xsd:element ref="ul" />
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:group name="altFlowContent" >
+        <xsd:choice>
+            <xsd:group ref="phrasingContent"/>
+            <xsd:element ref="address" />
+            <xsd:element ref="blockquote" />
+            <xsd:element ref="details" />
+            <xsd:element ref="dialog" />
+            <xsd:element ref="div" />
+            <xsd:element ref="dl" />
+            <xsd:element ref="fieldset" />
+            <xsd:element ref="figure" />
+            <xsd:element ref="form" />
+            <xsd:element ref="hr" />
+            <xsd:element ref="main" />
+            <xsd:element ref="meter" />
+            <xsd:element ref="nav" />
+            <xsd:element ref="ol" />
+            <xsd:element ref="p" />
+            <xsd:element ref="section" />
+            <xsd:element ref="style"/>
+            <xsd:element ref="table" />
+            <xsd:element ref="ul" />
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:group name="flowContent" >
+        <xsd:choice>
+            <xsd:group ref="headingContent"/>
+            <xsd:group ref="sectioningContent"/>
+            <xsd:group ref="phrasingContent"/>
+            <xsd:element ref="address" />
+            <xsd:element ref="blockquote" />
+            <xsd:element ref="details" />
+            <xsd:element ref="dialog" />
+            <xsd:element ref="div" />
+            <xsd:element ref="dl" />
+            <xsd:element ref="fieldset" />
+            <xsd:element ref="figure" />
+            <xsd:element ref="footer" />
+            <xsd:element ref="form" />
+            <xsd:element ref="header" />
+            <xsd:element ref="hr" />
+            <xsd:element ref="main" />
+            <xsd:element ref="ol" />
+            <xsd:element ref="p" />
+            <xsd:element ref="style"/>
+            <xsd:element ref="table" />
+            <xsd:element ref="ul" />
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:group name="phrasingContentWithoutMeter" >
+        <xsd:choice>
+            <xsd:group ref="embeddedContent"/>
+            <xsd:element ref="a"/>
+            <xsd:element ref="abbr" />
+            <xsd:element ref="area"/>
+            <xsd:element ref="b" />
+            <xsd:element ref="bdi" />
+            <xsd:element ref="bdo" />
+            <xsd:element ref="br" />
+            <xsd:element ref="button" />
+            <xsd:element ref="cite" />
+            <xsd:element ref="code" />
+            <xsd:element ref="data" />
+            <xsd:element ref="datalist" />
+            <xsd:element ref="del"/>
+            <xsd:element ref="dfn" />
+            <xsd:element ref="em" />
+            <xsd:element ref="i" />
+            <xsd:element ref="input" />
+            <xsd:element ref="ins"/>
+            <xsd:element ref="kbd" />
+            <xsd:element ref="label" />
+            <xsd:element ref="link"/>
+            <xsd:element ref="map"/>
+            <xsd:element ref="mark" />
+            <xsd:element ref="noscript" />
+            <xsd:element ref="output" />
+            <xsd:element ref="progress" />
+            <xsd:element ref="q" />
+            <xsd:element ref="ruby" />
+            <xsd:element ref="s" />
+            <xsd:element ref="samp" />
+            <xsd:element ref="script" />
+            <xsd:element ref="select" />
+            <xsd:element ref="small" />
+            <xsd:element ref="span" />
+            <xsd:element ref="strong" />
+            <xsd:element ref="sub" />
+            <xsd:element ref="sup" />
+            <xsd:element ref="template" />
+            <xsd:element ref="textarea" />
+            <xsd:element ref="time" />
+            <xsd:element ref="u" />
+            <xsd:element ref="var" />
+            <xsd:element ref="wbr" />
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:group name="phrasingContentWithoutProgress" >
+        <xsd:choice>
+            <xsd:group ref="embeddedContent"/>
+            <xsd:element ref="a"/>
+            <xsd:element ref="abbr" />
+            <xsd:element ref="area"/>
+            <xsd:element ref="b" />
+            <xsd:element ref="bdi" />
+            <xsd:element ref="bdo" />
+            <xsd:element ref="br" />
+            <xsd:element ref="button" />
+            <xsd:element ref="cite" />
+            <xsd:element ref="code" />
+            <xsd:element ref="data" />
+            <xsd:element ref="datalist" />
+            <xsd:element ref="del"/>
+            <xsd:element ref="dfn" />
+            <xsd:element ref="em" />
+            <xsd:element ref="i" />
+            <xsd:element ref="input" />
+            <xsd:element ref="ins"/>
+            <xsd:element ref="kbd" />
+            <xsd:element ref="label" />
+            <xsd:element ref="link"/>
+            <xsd:element ref="map"/>
+            <xsd:element ref="mark" />
+            <xsd:element ref="meter" />
+            <xsd:element ref="noscript" />
+            <xsd:element ref="output" />
+            <xsd:element ref="q" />
+            <xsd:element ref="ruby" />
+            <xsd:element ref="s" />
+            <xsd:element ref="samp" />
+            <xsd:element ref="script" />
+            <xsd:element ref="select" />
+            <xsd:element ref="small" />
+            <xsd:element ref="span" />
+            <xsd:element ref="strong" />
+            <xsd:element ref="sub" />
+            <xsd:element ref="sup" />
+            <xsd:element ref="template" />
+            <xsd:element ref="textarea" />
+            <xsd:element ref="time" />
+            <xsd:element ref="u" />
+            <xsd:element ref="var" />
+            <xsd:element ref="wbr" />
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:group name="phrasingContentWithoutDfn" >
+        <xsd:choice>
+            <xsd:group ref="embeddedContent"/>
+            <xsd:element ref="a"/>
+            <xsd:element ref="abbr" />
+            <xsd:element ref="area"/>
+            <xsd:element ref="b" />
+            <xsd:element ref="bdi" />
+            <xsd:element ref="bdo" />
+            <xsd:element ref="br" />
+            <xsd:element ref="button" />
+            <xsd:element ref="cite" />
+            <xsd:element ref="code" />
+            <xsd:element ref="data" />
+            <xsd:element ref="datalist" />
+            <xsd:element ref="del"/>
+            <xsd:element ref="em" />
+            <xsd:element ref="i" />
+            <xsd:element ref="input" />
+            <xsd:element ref="ins"/>
+            <xsd:element ref="kbd" />
+            <xsd:element ref="label" />
+            <xsd:element ref="link"/>
+            <xsd:element ref="map"/>
+            <xsd:element ref="mark" />
+            <xsd:element ref="meter" />
+            <xsd:element ref="noscript" />
+            <xsd:element ref="output" />
+            <xsd:element ref="progress" />
+            <xsd:element ref="q" />
+            <xsd:element ref="ruby" />
+            <xsd:element ref="s" />
+            <xsd:element ref="samp" />
+            <xsd:element ref="script" />
+            <xsd:element ref="select" />
+            <xsd:element ref="small" />
+            <xsd:element ref="span" />
+            <xsd:element ref="strong" />
+            <xsd:element ref="sub" />
+            <xsd:element ref="sup" />
+            <xsd:element ref="template" />
+            <xsd:element ref="textarea" />
+            <xsd:element ref="time" />
+            <xsd:element ref="u" />
+            <xsd:element ref="var" />
+            <xsd:element ref="wbr" />
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:group name="phrasingContent" >
+        <xsd:choice>
+            <xsd:group ref="embeddedContent"/>
+            <xsd:element ref="a"/>
+            <xsd:element ref="abbr" />
+            <xsd:element ref="area"/>
+            <xsd:element ref="b" />
+            <xsd:element ref="bdi" />
+            <xsd:element ref="bdo" />
+            <xsd:element ref="br" />
+            <xsd:element ref="button" />
+            <xsd:element ref="cite" />
+            <xsd:element ref="code" />
+            <xsd:element ref="data" />
+            <xsd:element ref="datalist" />
+            <xsd:element ref="del"/>
+            <xsd:element ref="dfn" />
+            <xsd:element ref="em" />
+            <xsd:element ref="i" />
+            <xsd:element ref="input" />
+            <xsd:element ref="ins"/>
+            <xsd:element ref="kbd" />
+            <xsd:element ref="label" />
+            <xsd:element ref="link"/>
+            <xsd:element ref="map"/>
+            <xsd:element ref="mark" />
+            <xsd:element ref="meter" />
+            <xsd:element ref="noscript" />
+            <xsd:element ref="output" />
+            <xsd:element ref="progress" />
+            <xsd:element ref="q" />
+            <xsd:element ref="ruby" />
+            <xsd:element ref="s" />
+            <xsd:element ref="samp" />
+            <xsd:element ref="script" />
+            <xsd:element ref="select" />
+            <xsd:element ref="small" />
+            <xsd:element ref="span" />
+            <xsd:element ref="strong" />
+            <xsd:element ref="sub" />
+            <xsd:element ref="sup" />
+            <xsd:element ref="template" />
+            <xsd:element ref="textarea" />
+            <xsd:element ref="time" />
+            <xsd:element ref="u" />
+            <xsd:element ref="var" />
+            <xsd:element ref="wbr" />
+        </xsd:choice>
+    </xsd:group>
+
+    <xsd:group name="embeddedContent">
+        <xsd:all>
+            <xsd:element ref="audio"/>
+            <xsd:element ref="canvas"/>
+            <xsd:element ref="embed"/>
+            <xsd:element ref="iframe"/>
+            <xsd:element ref="img"/>
+            <xsd:element ref="math"/>
+            <xsd:element ref="object"/>
+            <xsd:element ref="picture"/>
+            <xsd:element ref="svg"/>
+            <xsd:element ref="video"/>
+        </xsd:all>
+    </xsd:group>
+
+    <xsd:group name="headingContent">
+        <xsd:all>
+            <xsd:element ref="h1" />
+            <xsd:element ref="h2" />
+            <xsd:element ref="h3" />
+            <xsd:element ref="h4" />
+            <xsd:element ref="h5" />
+            <xsd:element ref="h6" />
+        </xsd:all>
+    </xsd:group>
+
+    <xsd:group name="sectioningContent">
+        <xsd:all>
+            <xsd:element ref="article" />
+            <xsd:element ref="aside" />
+            <xsd:element ref="nav" />
+            <xsd:element ref="section" />
+        </xsd:all>
+    </xsd:group>
+
+</xsd:schema>
+
