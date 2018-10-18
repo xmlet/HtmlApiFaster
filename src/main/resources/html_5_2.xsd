@@ -1335,6 +1335,12 @@
     <!--         Groups            -->
     <!-- ************************* -->
 
+    <xsd:element name="root">
+        <xsd:complexType>
+            <xsd:group ref="transparentContent"/>
+        </xsd:complexType>
+    </xsd:element>
+
     <xsd:group name="interactiveContent">
         <xsd:all>
             <xsd:element ref="a"/>
