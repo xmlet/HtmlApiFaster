@@ -39,7 +39,7 @@
                             <executable>${basedir}/decompile_class_binaries.bat</executable>
                         </configuration>
                     </execution>
-                    <execution>
+                    <!--execution>
                         <id>clean_sources</id>
                         <phase>clean</phase>
                         <goals>
@@ -48,7 +48,7 @@
                         <configuration>
                             <executable>${basedir}/clean_sources.bat</executable>
                         </configuration>
-                    </execution>
+                    </execution-->
                 </executions>
             </plugin>
 
