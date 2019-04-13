@@ -129,6 +129,11 @@ public class DetailsSummary<Z extends Element> implements CustomAttributeGroup<D
       return new DetailsComplete(this.parent, this.visitor, true);
    }
 
+   public DetailsComplete<Z> pre(String pre) {
+      ((Pre)(new Pre(this, this.visitor, true)).text(pre)).__();
+      return new DetailsComplete(this.parent, this.visitor, true);
+   }
+
    public DetailsComplete<Z> style(String style) {
       ((Style)(new Style(this, this.visitor, true)).text(style)).__();
       return new DetailsComplete(this.parent, this.visitor, true);

@@ -61,6 +61,10 @@ public interface AltFlowContentChoice<T extends Element<T, Z>, Z extends Element
       return new P(this.self());
    }
 
+   default Pre<T> pre() {
+      return new Pre(this.self());
+   }
+
    default Section<T> section() {
       return new Section(this.self());
    }

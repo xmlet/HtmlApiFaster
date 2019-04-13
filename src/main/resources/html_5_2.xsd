@@ -1612,6 +1612,7 @@
             <xsd:element ref="nav" />
             <xsd:element ref="ol" />
             <xsd:element ref="p" />
+            <xsd:element ref="pre" />
             <xsd:element ref="section" />
             <xsd:element ref="style"/>
             <xsd:element ref="table" />
@@ -1639,6 +1640,7 @@
             <xsd:element ref="main" />
             <xsd:element ref="ol" />
             <xsd:element ref="p" />
+            <xsd:element ref="pre" />
             <xsd:element ref="style"/>
             <xsd:element ref="table" />
             <xsd:element ref="ul" />

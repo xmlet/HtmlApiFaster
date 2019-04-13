@@ -61,6 +61,10 @@ public interface FlowContentChoice<T extends Element<T, Z>, Z extends Element> e
       return new P(this.self());
    }
 
+   default Pre<T> pre() {
+      return new Pre(this.self());
+   }
+
    default Style<T> style() {
       return new Style(this.self());
    }
