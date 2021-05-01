@@ -1,5 +1,6 @@
 package org.xmlet.htmlapifaster;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public final class Ins<Z extends Element> implements GlobalAttributes<Ins<Z>, Z>, TransparentContentChoice<Ins<Z>, Z> {
@@ -36,6 +37,14 @@ public final class Ins<Z extends Element> implements GlobalAttributes<Ins<Z>, Z>
       this.visitor.visitOpenDynamic();
       consumer.accept(this);
       this.visitor.visitCloseDynamic();
+      return this;
+   }
+
+   public final Ins<Z> async(BiConsumer<Runnable, Ins<Z>> var1) {
+      this.visitor.visitOpenAsync();
+      ElementVisitor var10001 = this.visitor;
+      this.visitor.getClass();
+      var1.accept(var10001::visitCloseAsync, this);
       return this;
    }
 

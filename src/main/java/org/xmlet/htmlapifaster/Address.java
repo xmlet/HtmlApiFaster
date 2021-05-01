@@ -1,5 +1,6 @@
 package org.xmlet.htmlapifaster;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public final class Address<Z extends Element> implements GlobalAttributes<Address<Z>, Z>, FlowContentChoice<Address<Z>, Z> {
@@ -36,6 +37,14 @@ public final class Address<Z extends Element> implements GlobalAttributes<Addres
       this.visitor.visitOpenDynamic();
       consumer.accept(this);
       this.visitor.visitCloseDynamic();
+      return this;
+   }
+
+   public final Address<Z> async(BiConsumer<Runnable, Address<Z>> var1) {
+      this.visitor.visitOpenAsync();
+      ElementVisitor var10001 = this.visitor;
+      this.visitor.getClass();
+      var1.accept(var10001::visitCloseAsync, this);
       return this;
    }
 

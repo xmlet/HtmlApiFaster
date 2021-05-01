@@ -1,5 +1,6 @@
 package org.xmlet.htmlapifaster;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class DetailsComplete<Z extends Element> implements CustomAttributeGroup<DetailsComplete<Z>, Z> {
@@ -30,6 +31,14 @@ public class DetailsComplete<Z extends Element> implements CustomAttributeGroup<
       this.visitor.visitOpenDynamic();
       consumer.accept(this);
       this.visitor.visitCloseDynamic();
+      return this;
+   }
+
+   public final DetailsComplete<Z> async(BiConsumer<Runnable, DetailsComplete<Z>> var1) {
+      this.visitor.visitOpenAsync();
+      ElementVisitor var10001 = this.visitor;
+      this.visitor.getClass();
+      var1.accept(var10001::visitCloseAsync, this);
       return this;
    }
 

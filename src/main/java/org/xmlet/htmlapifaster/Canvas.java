@@ -1,5 +1,6 @@
 package org.xmlet.htmlapifaster;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public final class Canvas<Z extends Element> implements GlobalAttributes<Canvas<Z>, Z>, TransparentContentChoice<Canvas<Z>, Z> {
@@ -36,6 +37,14 @@ public final class Canvas<Z extends Element> implements GlobalAttributes<Canvas<
       this.visitor.visitOpenDynamic();
       consumer.accept(this);
       this.visitor.visitCloseDynamic();
+      return this;
+   }
+
+   public final Canvas<Z> async(BiConsumer<Runnable, Canvas<Z>> var1) {
+      this.visitor.visitOpenAsync();
+      ElementVisitor var10001 = this.visitor;
+      this.visitor.getClass();
+      var1.accept(var10001::visitCloseAsync, this);
       return this;
    }
 

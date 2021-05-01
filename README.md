@@ -266,3 +266,28 @@ public class BinderExample{
     source and documention files also allows to verify that there are no compiler problems with the code, which is very 
     helpful when making changes in the way that this DSL is generated.
 </div>
+
+## Changelog
+
+### 1.0.8
+
+<div align="justify">
+     <ul>
+         <li>
+             Added two new methods to ElementVisitor, visitOpenAsync and visitCloseAsync, to allow asynchronous operations.
+         </li>
+         <li>
+             Added an async method to all Elements.
+         </li>
+     </ul>
+ </div>
+ 
+ ### 1.0.7
+ 
+ <div align="justify">
+     <ul>
+         <li>
+             First usable version.
+         </li>
+     </ul>
+ </div>

@@ -17,6 +17,12 @@ public abstract class ElementVisitor {
    public void visitCloseDynamic() {
    }
 
+   public void visitOpenAsync() {
+   }
+
+   public void visitCloseAsync() {
+   }
+
    public <Z extends Element> void visitParentMeta(Meta<Z> var1) {
       this.visitParent(var1);
    }

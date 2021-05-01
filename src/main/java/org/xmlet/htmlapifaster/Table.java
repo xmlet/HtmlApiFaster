@@ -1,5 +1,6 @@
 package org.xmlet.htmlapifaster;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public final class Table<Z extends Element> implements GlobalAttributes<Table<Z>, Z>, TableChoice0<Table<Z>, Z> {
@@ -36,6 +37,14 @@ public final class Table<Z extends Element> implements GlobalAttributes<Table<Z>
       this.visitor.visitOpenDynamic();
       consumer.accept(this);
       this.visitor.visitCloseDynamic();
+      return this;
+   }
+
+   public final Table<Z> async(BiConsumer<Runnable, Table<Z>> var1) {
+      this.visitor.visitOpenAsync();
+      ElementVisitor var10001 = this.visitor;
+      this.visitor.getClass();
+      var1.accept(var10001::visitCloseAsync, this);
       return this;
    }
 
