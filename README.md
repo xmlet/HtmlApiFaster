@@ -32,7 +32,7 @@
 <dependency>
     <groupId>com.github.xmlet</groupId>
     <artifactId>htmlApiFaster</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.8</version>
 </dependency>
 ``` 
 
