@@ -1,7 +1,6 @@
 package org.xmlet.htmlapifaster;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public final class Link<Z extends Element> implements GlobalAttributes<Link<Z>, Z>, TextGroup<Link<Z>, Z> {
    protected final Z parent;
@@ -33,23 +32,11 @@ public final class Link<Z extends Element> implements GlobalAttributes<Link<Z>, 
       return this.parent;
    }
 
-   public final Link<Z> dynamic(Consumer<Link<Z>> consumer) {
-      this.visitor.visitOpenDynamic();
-      consumer.accept(this);
-      this.visitor.visitCloseDynamic();
-      return this;
-   }
-
    public final Link<Z> async(BiConsumer<Runnable, Link<Z>> var1) {
       this.visitor.visitOpenAsync();
       ElementVisitor var10001 = this.visitor;
       this.visitor.getClass();
       var1.accept(var10001::visitCloseAsync, this);
-      return this;
-   }
-
-   public final Link<Z> of(Consumer<Link<Z>> consumer) {
-      consumer.accept(this);
       return this;
    }
 

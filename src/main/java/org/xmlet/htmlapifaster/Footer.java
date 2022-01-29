@@ -1,7 +1,6 @@
 package org.xmlet.htmlapifaster;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public final class Footer<Z extends Element> implements GlobalAttributes<Footer<Z>, Z>, FlowContentChoice<Footer<Z>, Z> {
    protected final Z parent;
@@ -33,23 +32,11 @@ public final class Footer<Z extends Element> implements GlobalAttributes<Footer<
       return this.parent;
    }
 
-   public final Footer<Z> dynamic(Consumer<Footer<Z>> consumer) {
-      this.visitor.visitOpenDynamic();
-      consumer.accept(this);
-      this.visitor.visitCloseDynamic();
-      return this;
-   }
-
    public final Footer<Z> async(BiConsumer<Runnable, Footer<Z>> var1) {
       this.visitor.visitOpenAsync();
       ElementVisitor var10001 = this.visitor;
       this.visitor.getClass();
       var1.accept(var10001::visitCloseAsync, this);
-      return this;
-   }
-
-   public final Footer<Z> of(Consumer<Footer<Z>> consumer) {
-      consumer.accept(this);
       return this;
    }
 

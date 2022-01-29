@@ -1,7 +1,6 @@
 package org.xmlet.htmlapifaster;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public final class Noscript<Z extends Element> implements GlobalAttributes<Noscript<Z>, Z>, TransparentContentChoice<Noscript<Z>, Z> {
    protected final Z parent;
@@ -33,23 +32,11 @@ public final class Noscript<Z extends Element> implements GlobalAttributes<Noscr
       return this.parent;
    }
 
-   public final Noscript<Z> dynamic(Consumer<Noscript<Z>> consumer) {
-      this.visitor.visitOpenDynamic();
-      consumer.accept(this);
-      this.visitor.visitCloseDynamic();
-      return this;
-   }
-
    public final Noscript<Z> async(BiConsumer<Runnable, Noscript<Z>> var1) {
       this.visitor.visitOpenAsync();
       ElementVisitor var10001 = this.visitor;
       this.visitor.getClass();
       var1.accept(var10001::visitCloseAsync, this);
-      return this;
-   }
-
-   public final Noscript<Z> of(Consumer<Noscript<Z>> consumer) {
-      consumer.accept(this);
       return this;
    }
 

@@ -1,7 +1,6 @@
 package org.xmlet.htmlapifaster;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public final class Meter<Z extends Element> implements GlobalAttributes<Meter<Z>, Z>, PhrasingContentWithoutMeterChoice<Meter<Z>, Z> {
    protected final Z parent;
@@ -33,23 +32,11 @@ public final class Meter<Z extends Element> implements GlobalAttributes<Meter<Z>
       return this.parent;
    }
 
-   public final Meter<Z> dynamic(Consumer<Meter<Z>> consumer) {
-      this.visitor.visitOpenDynamic();
-      consumer.accept(this);
-      this.visitor.visitCloseDynamic();
-      return this;
-   }
-
    public final Meter<Z> async(BiConsumer<Runnable, Meter<Z>> var1) {
       this.visitor.visitOpenAsync();
       ElementVisitor var10001 = this.visitor;
       this.visitor.getClass();
       var1.accept(var10001::visitCloseAsync, this);
-      return this;
-   }
-
-   public final Meter<Z> of(Consumer<Meter<Z>> consumer) {
-      consumer.accept(this);
       return this;
    }
 

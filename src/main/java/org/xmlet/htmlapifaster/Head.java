@@ -1,7 +1,6 @@
 package org.xmlet.htmlapifaster;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public final class Head<Z extends Element> implements GlobalAttributes<Head<Z>, Z>, MetadataContentAll1<Head<Z>, Z> {
    protected final Z parent;
@@ -33,23 +32,11 @@ public final class Head<Z extends Element> implements GlobalAttributes<Head<Z>, 
       return this.parent;
    }
 
-   public final Head<Z> dynamic(Consumer<Head<Z>> consumer) {
-      this.visitor.visitOpenDynamic();
-      consumer.accept(this);
-      this.visitor.visitCloseDynamic();
-      return this;
-   }
-
    public final Head<Z> async(BiConsumer<Runnable, Head<Z>> var1) {
       this.visitor.visitOpenAsync();
       ElementVisitor var10001 = this.visitor;
       this.visitor.getClass();
       var1.accept(var10001::visitCloseAsync, this);
-      return this;
-   }
-
-   public final Head<Z> of(Consumer<Head<Z>> consumer) {
-      consumer.accept(this);
       return this;
    }
 

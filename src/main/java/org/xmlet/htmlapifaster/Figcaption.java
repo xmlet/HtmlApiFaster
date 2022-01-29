@@ -1,7 +1,6 @@
 package org.xmlet.htmlapifaster;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public final class Figcaption<Z extends Element> implements GlobalAttributes<Figcaption<Z>, Z>, FlowContentChoice<Figcaption<Z>, Z> {
    protected final Z parent;
@@ -33,23 +32,11 @@ public final class Figcaption<Z extends Element> implements GlobalAttributes<Fig
       return this.parent;
    }
 
-   public final Figcaption<Z> dynamic(Consumer<Figcaption<Z>> consumer) {
-      this.visitor.visitOpenDynamic();
-      consumer.accept(this);
-      this.visitor.visitCloseDynamic();
-      return this;
-   }
-
    public final Figcaption<Z> async(BiConsumer<Runnable, Figcaption<Z>> var1) {
       this.visitor.visitOpenAsync();
       ElementVisitor var10001 = this.visitor;
       this.visitor.getClass();
       var1.accept(var10001::visitCloseAsync, this);
-      return this;
-   }
-
-   public final Figcaption<Z> of(Consumer<Figcaption<Z>> consumer) {
-      consumer.accept(this);
       return this;
    }
 

@@ -269,6 +269,19 @@ public class BinderExample{
 
 ## Changelog
 
+### 1.0.9
+
+<div align="justify">
+     <ul>
+         <li>
+             Moves dynamic and of method from the specific elements class to a default implementation.
+         </li>
+         <li>
+             Adds a new Element, CustomElement, and a new method .custom on Element. Refer to <a href="https://github.com/xmlet/HtmlFlow/issues/80">Issue</a> for details.
+         </li>
+     </ul>
+ </div>
+
 ### 1.0.8
 
 <div align="justify">

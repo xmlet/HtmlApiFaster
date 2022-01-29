@@ -1,7 +1,6 @@
 package org.xmlet.htmlapifaster;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class DetailsSummary<Z extends Element> implements CustomAttributeGroup<DetailsSummary<Z>, Z> {
    protected final Z parent;
@@ -27,23 +26,11 @@ public class DetailsSummary<Z extends Element> implements CustomAttributeGroup<D
       return this.parent;
    }
 
-   public final DetailsSummary<Z> dynamic(Consumer<DetailsSummary<Z>> consumer) {
-      this.visitor.visitOpenDynamic();
-      consumer.accept(this);
-      this.visitor.visitCloseDynamic();
-      return this;
-   }
-
    public final DetailsSummary<Z> async(BiConsumer<Runnable, DetailsSummary<Z>> var1) {
       this.visitor.visitOpenAsync();
       ElementVisitor var10001 = this.visitor;
       this.visitor.getClass();
       var1.accept(var10001::visitCloseAsync, this);
-      return this;
-   }
-
-   public final DetailsSummary<Z> of(Consumer<DetailsSummary<Z>> consumer) {
-      consumer.accept(this);
       return this;
    }
 

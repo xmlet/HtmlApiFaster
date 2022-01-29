@@ -1,7 +1,6 @@
 package org.xmlet.htmlapifaster;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public final class Style<Z extends Element> implements GlobalAttributes<Style<Z>, Z>, TextGroup<Style<Z>, Z> {
    protected final Z parent;
@@ -33,23 +32,11 @@ public final class Style<Z extends Element> implements GlobalAttributes<Style<Z>
       return this.parent;
    }
 
-   public final Style<Z> dynamic(Consumer<Style<Z>> consumer) {
-      this.visitor.visitOpenDynamic();
-      consumer.accept(this);
-      this.visitor.visitCloseDynamic();
-      return this;
-   }
-
    public final Style<Z> async(BiConsumer<Runnable, Style<Z>> var1) {
       this.visitor.visitOpenAsync();
       ElementVisitor var10001 = this.visitor;
       this.visitor.getClass();
       var1.accept(var10001::visitCloseAsync, this);
-      return this;
-   }
-
-   public final Style<Z> of(Consumer<Style<Z>> consumer) {
-      consumer.accept(this);
       return this;
    }
 

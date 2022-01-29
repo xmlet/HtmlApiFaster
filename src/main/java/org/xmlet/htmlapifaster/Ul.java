@@ -1,7 +1,6 @@
 package org.xmlet.htmlapifaster;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public final class Ul<Z extends Element> implements GlobalAttributes<Ul<Z>, Z>, UlAll0<Ul<Z>, Z> {
    protected final Z parent;
@@ -33,23 +32,11 @@ public final class Ul<Z extends Element> implements GlobalAttributes<Ul<Z>, Z>, 
       return this.parent;
    }
 
-   public final Ul<Z> dynamic(Consumer<Ul<Z>> consumer) {
-      this.visitor.visitOpenDynamic();
-      consumer.accept(this);
-      this.visitor.visitCloseDynamic();
-      return this;
-   }
-
    public final Ul<Z> async(BiConsumer<Runnable, Ul<Z>> var1) {
       this.visitor.visitOpenAsync();
       ElementVisitor var10001 = this.visitor;
       this.visitor.getClass();
       var1.accept(var10001::visitCloseAsync, this);
-      return this;
-   }
-
-   public final Ul<Z> of(Consumer<Ul<Z>> consumer) {
-      consumer.accept(this);
       return this;
    }
 

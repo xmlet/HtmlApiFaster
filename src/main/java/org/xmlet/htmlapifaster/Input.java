@@ -1,7 +1,6 @@
 package org.xmlet.htmlapifaster;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public final class Input<Z extends Element> implements GlobalAttributes<Input<Z>, Z>, TextGroup<Input<Z>, Z> {
    protected final Z parent;
@@ -33,23 +32,11 @@ public final class Input<Z extends Element> implements GlobalAttributes<Input<Z>
       return this.parent;
    }
 
-   public final Input<Z> dynamic(Consumer<Input<Z>> consumer) {
-      this.visitor.visitOpenDynamic();
-      consumer.accept(this);
-      this.visitor.visitCloseDynamic();
-      return this;
-   }
-
    public final Input<Z> async(BiConsumer<Runnable, Input<Z>> var1) {
       this.visitor.visitOpenAsync();
       ElementVisitor var10001 = this.visitor;
       this.visitor.getClass();
       var1.accept(var10001::visitCloseAsync, this);
-      return this;
-   }
-
-   public final Input<Z> of(Consumer<Input<Z>> consumer) {
-      consumer.accept(this);
       return this;
    }
 
