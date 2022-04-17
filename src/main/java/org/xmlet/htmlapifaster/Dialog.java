@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Dialog<Z extends Element> implements GlobalAttributes<Dialog<Z>, Z>, FlowContentChoice<Dialog<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Dialog<Z extends Element> implements GlobalAttributes<Dialog<
    public Z __() {
       this.visitor.visitParentDialog(this);
       return this.parent;
-   }
-
-   public final Dialog<Z> async(BiConsumer<Runnable, Dialog<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

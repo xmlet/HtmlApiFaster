@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class A<Z extends Element> implements GlobalAttributes<A<Z>, Z>, TransparentContentWithoutAAll1<A<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class A<Z extends Element> implements GlobalAttributes<A<Z>, Z>, Tr
    public Z __() {
       this.visitor.visitParentA(this);
       return this.parent;
-   }
-
-   public final A<Z> async(BiConsumer<Runnable, A<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

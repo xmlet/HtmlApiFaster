@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Datalist<Z extends Element> implements GlobalAttributes<Datalist<Z>, Z>, DatalistChoice0<Datalist<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Datalist<Z extends Element> implements GlobalAttributes<Datal
    public Z __() {
       this.visitor.visitParentDatalist(this);
       return this.parent;
-   }
-
-   public final Datalist<Z> async(BiConsumer<Runnable, Datalist<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

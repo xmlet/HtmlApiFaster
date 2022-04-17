@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Q<Z extends Element> implements GlobalAttributes<Q<Z>, Z>, PhrasingContentChoice<Q<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Q<Z extends Element> implements GlobalAttributes<Q<Z>, Z>, Ph
    public Z __() {
       this.visitor.visitParentQ(this);
       return this.parent;
-   }
-
-   public final Q<Z> async(BiConsumer<Runnable, Q<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

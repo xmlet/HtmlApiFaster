@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Html<Z extends Element> implements GlobalAttributes<Html<Z>, Z>, HtmlChoice0<Html<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Html<Z extends Element> implements GlobalAttributes<Html<Z>, 
    public Z __() {
       this.visitor.visitParentHtml(this);
       return this.parent;
-   }
-
-   public final Html<Z> async(BiConsumer<Runnable, Html<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

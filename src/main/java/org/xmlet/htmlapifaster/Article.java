@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Article<Z extends Element> implements GlobalAttributes<Article<Z>, Z>, MainLessFlowContentChoice<Article<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Article<Z extends Element> implements GlobalAttributes<Articl
    public Z __() {
       this.visitor.visitParentArticle(this);
       return this.parent;
-   }
-
-   public final Article<Z> async(BiConsumer<Runnable, Article<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

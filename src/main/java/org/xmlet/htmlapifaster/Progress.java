@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Progress<Z extends Element> implements GlobalAttributes<Progress<Z>, Z>, PhrasingContentWithoutProgressChoice<Progress<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Progress<Z extends Element> implements GlobalAttributes<Progr
    public Z __() {
       this.visitor.visitParentProgress(this);
       return this.parent;
-   }
-
-   public final Progress<Z> async(BiConsumer<Runnable, Progress<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

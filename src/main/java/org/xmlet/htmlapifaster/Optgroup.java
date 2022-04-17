@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Optgroup<Z extends Element> implements GlobalAttributes<Optgroup<Z>, Z>, OptgroupAll0<Optgroup<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Optgroup<Z extends Element> implements GlobalAttributes<Optgr
    public Z __() {
       this.visitor.visitParentOptgroup(this);
       return this.parent;
-   }
-
-   public final Optgroup<Z> async(BiConsumer<Runnable, Optgroup<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

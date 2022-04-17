@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Caption<Z extends Element> implements GlobalAttributes<Caption<Z>, Z>, FlowContentChoice<Caption<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Caption<Z extends Element> implements GlobalAttributes<Captio
    public Z __() {
       this.visitor.visitParentCaption(this);
       return this.parent;
-   }
-
-   public final Caption<Z> async(BiConsumer<Runnable, Caption<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

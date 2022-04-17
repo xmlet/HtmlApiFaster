@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Embed<Z extends Element> implements GlobalAttributes<Embed<Z>, Z>, TextGroup<Embed<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Embed<Z extends Element> implements GlobalAttributes<Embed<Z>
    public Z __() {
       this.visitor.visitParentEmbed(this);
       return this.parent;
-   }
-
-   public final Embed<Z> async(BiConsumer<Runnable, Embed<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

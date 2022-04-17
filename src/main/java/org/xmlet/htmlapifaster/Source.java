@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Source<Z extends Element> implements GlobalAttributes<Source<Z>, Z>, TextGroup<Source<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Source<Z extends Element> implements GlobalAttributes<Source<
    public Z __() {
       this.visitor.visitParentSource(this);
       return this.parent;
-   }
-
-   public final Source<Z> async(BiConsumer<Runnable, Source<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

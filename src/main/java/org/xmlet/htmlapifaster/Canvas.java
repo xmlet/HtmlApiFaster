@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Canvas<Z extends Element> implements GlobalAttributes<Canvas<Z>, Z>, TransparentContentChoice<Canvas<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Canvas<Z extends Element> implements GlobalAttributes<Canvas<
    public Z __() {
       this.visitor.visitParentCanvas(this);
       return this.parent;
-   }
-
-   public final Canvas<Z> async(BiConsumer<Runnable, Canvas<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

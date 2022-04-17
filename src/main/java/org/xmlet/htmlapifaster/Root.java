@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Root<Z extends Element> implements CustomAttributeGroup<Root<Z>, Z>, TransparentContentChoice<Root<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Root<Z extends Element> implements CustomAttributeGroup<Root<
    public Z __() {
       this.visitor.visitParentRoot(this);
       return this.parent;
-   }
-
-   public final Root<Z> async(BiConsumer<Runnable, Root<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

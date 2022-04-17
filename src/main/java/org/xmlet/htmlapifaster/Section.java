@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Section<Z extends Element> implements GlobalAttributes<Section<Z>, Z>, FlowContentChoice<Section<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Section<Z extends Element> implements GlobalAttributes<Sectio
    public Z __() {
       this.visitor.visitParentSection(this);
       return this.parent;
-   }
-
-   public final Section<Z> async(BiConsumer<Runnable, Section<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {

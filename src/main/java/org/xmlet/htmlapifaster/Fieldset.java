@@ -1,7 +1,5 @@
 package org.xmlet.htmlapifaster;
 
-import java.util.function.BiConsumer;
-
 public final class Fieldset<Z extends Element> implements GlobalAttributes<Fieldset<Z>, Z>, FieldsetChoice0<Fieldset<Z>, Z> {
    protected final Z parent;
    protected final ElementVisitor visitor;
@@ -30,14 +28,6 @@ public final class Fieldset<Z extends Element> implements GlobalAttributes<Field
    public Z __() {
       this.visitor.visitParentFieldset(this);
       return this.parent;
-   }
-
-   public final Fieldset<Z> async(BiConsumer<Runnable, Fieldset<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var10001 = this.visitor;
-      this.visitor.getClass();
-      var1.accept(var10001::visitCloseAsync, this);
-      return this;
    }
 
    public Z getParent() {
