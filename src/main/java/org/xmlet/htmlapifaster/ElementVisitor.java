@@ -1,5 +1,10 @@
 package org.xmlet.htmlapifaster;
 
+import io.reactivex.rxjava3.core.Observable;
+
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 public abstract class ElementVisitor {
    public abstract void visitElement(Element var1);
 
@@ -16,12 +21,10 @@ public abstract class ElementVisitor {
 
    public void visitCloseDynamic() {
    }
-
-   public void visitOpenAsync() {
-   }
-
-   public void visitCloseAsync() {
-   }
+   
+   public abstract <E extends Element, T, O extends Observable<T>> void visitAsync(Supplier<E> element, Consumer<E> asyncAction,
+                                                                                   O obs);
+   public abstract <E extends Element> void visitThen(Supplier<E> elem);
 
    public <Z extends Element> void visitParentMeta(Meta<Z> var1) {
       this.visitParent(var1);
