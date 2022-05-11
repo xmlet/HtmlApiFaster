@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Observable;
 import org.xmlet.htmlapifaster.Element;
 import org.xmlet.htmlapifaster.ElementVisitor;
 
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -20,10 +21,10 @@ public class ThenableImpl<E extends Element, I> implements Thenable<E>{
     }
     
     @Override
-    public <R extends Element, T, O extends Observable<T>> Thenable<R> async(O obs, Consumer<E> asyncAction, Continuation<E,R> continuation) {
+    public <T, O extends Observable<T>> Thenable<E> async(O obs, BiConsumer<E, O> asyncAction) {
         visitorCache.visitAsync(this.next,asyncAction, obs);
         return new ThenableImpl<>(visitorCache,
-                new SupplierMemoize<>(() -> continuation.onContinue(this.next.get())),
+                this.next,
                 obs);
     }
     
