@@ -5,25 +5,24 @@ import org.xmlet.htmlapifaster.Element;
 import org.xmlet.htmlapifaster.ElementVisitor;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class ThenableImpl<E extends Element, I> implements Thenable<E>{
     
-    private final ElementVisitor visitorCache;
+    private final ElementVisitor visitor;
     private final SupplierMemoize<E> next;
     private final Observable<I> pipeline;
     
-    public ThenableImpl(ElementVisitor visitorCache, SupplierMemoize<E> next, Observable<I> pipeline) {
-        this.visitorCache = visitorCache;
+    public ThenableImpl(ElementVisitor visitor, SupplierMemoize<E> next, Observable<I> pipeline) {
+        this.visitor = visitor;
         this.next = next;
         this.pipeline = pipeline;
     }
     
     @Override
-    public <T, O extends Observable<T>> Thenable<E> async(O obs, BiConsumer<E, O> asyncAction) {
-        visitorCache.visitAsync(this.next,asyncAction, obs);
-        return new ThenableImpl<>(visitorCache,
+    public <T> Thenable<E> async(Observable<T> obs, BiConsumer<E, Observable<T>> asyncAction) {
+        visitor.visitAsync(this.next,asyncAction, obs);
+        return new ThenableImpl<>(visitor,
                 this.next,
                 obs);
     }
@@ -31,7 +30,7 @@ public class ThenableImpl<E extends Element, I> implements Thenable<E>{
     @Override
     public <R extends Element> Thenable<R> then(Function<E, R> cont) {
         final SupplierMemoize<R> nextElem = new SupplierMemoize<>(() -> cont.apply(this.next.get()));
-        visitorCache.visitThen(nextElem);
-        return new ThenableImpl<>(visitorCache, nextElem, this.pipeline);
+        visitor.visitThen(nextElem);
+        return new ThenableImpl<>(visitor, nextElem, this.pipeline);
     }
 }

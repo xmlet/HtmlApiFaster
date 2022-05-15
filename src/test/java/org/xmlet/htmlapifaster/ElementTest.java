@@ -14,11 +14,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.xmlet.htmlapifaster.async.SupplierMemoize;
 import org.xmlet.htmlapifaster.async.Thenable;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import static java.lang.Math.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -109,40 +112,57 @@ class ElementTest {
     @Test
     void test_async_view() {
         Observable<String> titles = Observable
-                .fromArray("542", "22", "3333", "42", "541241");
+                .fromArray("Nr", "Name");
     
-        Observable<Long> items = Observable
-                .intervalRange(1, 5, 0, 10, TimeUnit.MILLISECONDS);
+        Observable<Student> studentObservable = Observable
+                .intervalRange(1, 5, 0, 10, TimeUnit.MILLISECONDS)
+                .map(nr -> new Student(nr, randomNameGenerator(toIntExact(nr))));
     
         final Thenable<Element> thenable = new Html<>(visitor)
-                .head()
-                .title()
-                .text("This is test for the async")
-                .__()
-                .__()
                 .body()
                 .div()
                 .p()
-                .text("Creating table from reactive models")
+                .text("Students from a school board")
                 .__()
                 .__()
                 .div()
                 .table()
                 .thead()
-                .async(items,
-                        (thead, itemsObs) -> itemsObs.subscribe(nr -> thead.tr().text(nr).__()))
-                .then(thead -> thead.__().__().table().thead())
+                .tr()
                 .async(titles,
-                        (thead, titlesObs) -> titlesObs.subscribe(s -> thead.tr().text(s).__()))
-                .then(table -> table.__()
-                        .__()
-                        .div().p().text("This is after the tables")
-                        .__()
-                        .__()
-                        .__()
-                        .__()
-                        .__());
+                        (tr, titlesObs) -> titlesObs.subscribe(nr -> tr.th().text(nr).__()))
+                .then(tr -> tr.__().__().tbody())
+                .async(studentObservable,
+                        (tbody, studentObs) -> studentObs.subscribe(student -> tbody.tr()
+                                .th()
+                                    .text(student.nr)
+                                .__()
+                                    .td()
+                                        .text(student.name)
+                                    .__()
+                                .__()))
+                .then(tbody -> tbody.__().__().__().__().__());
         
         assertNotNull(thenable);
+    }
+    
+    private String randomNameGenerator(int nr) {
+        String[] names = new String[] {"Pedro", "Manuel", "Maria", "Clara","Rafael"};
+        return names[nr-1];
+    }
+    
+    private static class Student {
+        private final long nr;
+        private final String name;
+    
+        private Student(long nr, String name) {
+            this.nr = nr;
+            this.name = name;
+        }
+    
+        @Override
+        public String toString() {
+            return String.format("Student nr " + nr + " with name " + name);
+        }
     }
 }

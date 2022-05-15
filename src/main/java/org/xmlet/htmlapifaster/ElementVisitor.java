@@ -23,7 +23,8 @@ public abstract class ElementVisitor {
    public void visitCloseDynamic() {
    }
    
-   public abstract <E extends Element, T, O extends Observable<T>> void visitAsync(Supplier<E> element, BiConsumer<E, O> asyncAction, O obs);
+   public abstract <E extends Element, T> void visitAsync(Supplier<E> element,
+                                                          BiConsumer<E, Observable<T>> asyncAction, Observable<T> obs);
    public abstract <E extends Element> void visitThen(Supplier<E> elem);
 
    public <Z extends Element> void visitParentMeta(Meta<Z> var1) {
