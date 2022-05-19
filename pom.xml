@@ -19,7 +19,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <version>1.6.0</version>
                 <executions>
-                    <execution>
+                    <!--<execution>
                         <id>create_classes</id>
                         <phase>validate</phase>
                         <goals>
@@ -39,7 +39,7 @@
                             <executable>${basedir}/decompile_class_binaries.bat</executable>
                         </configuration>
                     </execution>
-                    <!--execution>
+                    execution>
                         <id>clean_sources</id>
                         <phase>clean</phase>
                         <goals>
