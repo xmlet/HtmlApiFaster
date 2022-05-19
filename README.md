@@ -18,6 +18,14 @@
     In order to generate this code some additional libraries were needed such as <a href="https://github.com/xmlet/XsdAsmFaster">XsdAsmFaster</a>, 
     <a href="https://github.com/xmlet/XsdParser">XsdParser</a> and <a href="http://asm.ow2.org/">ASM</a>. 
     More information of how this library was generated will be added further.
+    <br />
+    <br />
+    <strong>
+       NOTICE: The HTML elements generator XsdAsmFaster is disabled in
+       <a href="https://github.com/xmlet/HtmlApiFaster/blob/master/pom.xml#L21">maven executions section</a>
+       to allow other customizations in source code such as the package <code>org.xmlet.htmlapifaster.async</code>.
+       If you need new features of XsdAsmFaster you have to enable it again.
+    </strong>
 </div>
 
 ## Installation
@@ -268,6 +276,35 @@ public class BinderExample{
 </div>
 
 ## Changelog
+
+### 1.0.11
+
+<div align="justify">
+     <ul>
+         <li>
+             New <code>async()</code> method in <code>Element</code> to support asynchronous data models, such as 
+             <code>Observable</code> or <code>Publisher</code>. 
+         </li>
+         <li>
+             New package <code>org.xmlet.htmlapifaster.async</code> 
+         </li>
+         <li>
+             New interfaces <code>Thenable</code> and <code>AsyncElement</code> 
+         </li>
+     </ul>
+ </div>
+
+### 1.0.10
+
+<div align="justify">
+     <ul>
+         <li>
+             Removed the async method and corresponding visit methods included in release 1.0.8.
+             Theses methods have been removed from XsdAsmFaster and we intend to implement them 
+             at source code level of HtmlApiFaster.
+         </li>
+     </ul>
+ </div>
 
 ### 1.0.9
 
