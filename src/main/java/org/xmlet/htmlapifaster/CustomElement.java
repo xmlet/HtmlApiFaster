@@ -20,15 +20,6 @@ public final class CustomElement<Z extends Element> implements GlobalAttributes<
       return this.parent;
    }
 
-   public final CustomElement<Z> async(BiConsumer<Runnable, CustomElement<Z>> var1) {
-      this.visitor.visitOpenAsync();
-      ElementVisitor var2 = this.visitor;
-      this.visitor.getClass();
-      Objects.requireNonNull(var2);
-      var1.accept(var2::visitCloseAsync, this);
-      return this;
-   }
-
    public Z getParent() {
       return this.parent;
    }
