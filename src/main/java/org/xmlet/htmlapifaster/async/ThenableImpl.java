@@ -1,6 +1,6 @@
 package org.xmlet.htmlapifaster.async;
 
-import io.reactivex.rxjava3.core.Observable;
+import org.reactivestreams.Publisher;
 import org.xmlet.htmlapifaster.Element;
 import org.xmlet.htmlapifaster.ElementVisitor;
 
@@ -11,16 +11,16 @@ public class ThenableImpl<E extends Element, I> implements Thenable<E>{
     
     private final ElementVisitor visitor;
     private final SupplierMemoize<E> next;
-    private final Observable<I> pipeline;
+    private final Publisher<I> pipeline;
     
-    public ThenableImpl(ElementVisitor visitor, SupplierMemoize<E> next, Observable<I> pipeline) {
+    public ThenableImpl(ElementVisitor visitor, SupplierMemoize<E> next, Publisher<I> pipeline) {
         this.visitor = visitor;
         this.next = next;
         this.pipeline = pipeline;
     }
     
     @Override
-    public <T> Thenable<E> async(Observable<T> obs, BiConsumer<E, Observable<T>> asyncAction) {
+    public <T> Thenable<E> async(Publisher<T> obs, BiConsumer<E, Publisher<T>> asyncAction) {
         visitor.visitAsync(this.next,asyncAction, obs);
         return new ThenableImpl<>(visitor,
                 this.next,

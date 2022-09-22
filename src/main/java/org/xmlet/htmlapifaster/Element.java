@@ -1,6 +1,6 @@
 package org.xmlet.htmlapifaster;
 
-import io.reactivex.rxjava3.core.Observable;
+import org.reactivestreams.Publisher;
 import org.xmlet.htmlapifaster.async.AsyncElement;
 import org.xmlet.htmlapifaster.async.SupplierMemoize;
 import org.xmlet.htmlapifaster.async.Thenable;
@@ -19,14 +19,14 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
    Z __();
 
    Z getParent();
-   
-   default <E> Thenable<T> async(Observable<E> obs, BiConsumer<T, Observable<E>> asyncAction) {
+
+   default <E> Thenable<T> async(Publisher<E> obs, BiConsumer<T, Publisher<E>> asyncAction) {
       this.getVisitor().visitAsync(this::self, asyncAction, obs);
       return new ThenableImpl<>(this.getVisitor(),
               new SupplierMemoize<>(this::self),
               obs);
    }
-   
+
    default T dynamic(Consumer<T> consumer) {
       T self = this.self();
       ElementVisitor visitor = this.getVisitor();

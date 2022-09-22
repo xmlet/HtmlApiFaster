@@ -1,9 +1,8 @@
 package org.xmlet.htmlapifaster;
 
-import io.reactivex.rxjava3.core.Observable;
+import org.reactivestreams.Publisher;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public abstract class ElementVisitor {
@@ -24,7 +23,7 @@ public abstract class ElementVisitor {
    }
    
    public abstract <E extends Element, T> void visitAsync(Supplier<E> element,
-                                                          BiConsumer<E, Observable<T>> asyncAction, Observable<T> obs);
+                                                          BiConsumer<E, Publisher<T>> asyncAction, Publisher<T> obs);
    public abstract <E extends Element> void visitThen(Supplier<E> elem);
 
    public <Z extends Element> void visitParentMeta(Meta<Z> var1) {
