@@ -2,12 +2,16 @@ package org.xmlet.htmlapifaster;
 
 import org.reactivestreams.Publisher;
 import org.xmlet.htmlapifaster.async.AsyncElement;
+import org.xmlet.htmlapifaster.async.OnPublisherCompletion;
+import org.xmlet.htmlapifaster.async.PublisherOnCompleteHandlerProxy;
 import org.xmlet.htmlapifaster.async.SupplierMemoize;
 import org.xmlet.htmlapifaster.async.Thenable;
 import org.xmlet.htmlapifaster.async.ThenableImpl;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+
+import static org.xmlet.htmlapifaster.async.PublisherOnCompleteHandlerProxy.proxyPublisher;
 
 public interface Element<T extends Element, Z extends Element> extends AsyncElement<T> {
    T self();
@@ -21,10 +25,10 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
    Z getParent();
 
    default <E> Thenable<T> async(Publisher<E> obs, BiConsumer<T, Publisher<E>> asyncAction) {
-      this.getVisitor().visitAsync(this::self, asyncAction, obs);
-      return new ThenableImpl<>(this.getVisitor(),
-              new SupplierMemoize<>(this::self),
-              obs);
+      PublisherOnCompleteHandlerProxy.PublisherOnCompleteHandler<E> proxy = proxyPublisher(obs);
+      final OnPublisherCompletion publisherCompletion = this.getVisitor().visitAsync(this::self, asyncAction, proxy);
+      proxy.addOnCompleteHandler(publisherCompletion);
+      return new ThenableImpl<>(this.getVisitor(), new SupplierMemoize<>(this::self));
    }
 
    default T dynamic(Consumer<T> consumer) {
