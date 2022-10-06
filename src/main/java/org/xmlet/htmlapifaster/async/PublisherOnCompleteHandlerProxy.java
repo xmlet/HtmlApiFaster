@@ -16,17 +16,12 @@ public final class PublisherOnCompleteHandlerProxy {
         private final Publisher<T> src;
         private OnPublisherCompletion handler;
         
-        private boolean hasRun = false;
-        
         private PublisherOnCompleteHandler(Publisher<T> s) {
             src = s;
         }
         
         public void addOnCompleteHandler(OnPublisherCompletion action) {
             handler = action;
-            if (hasRun) {
-                handler.onComplete();
-            }
         }
         
         @Override
@@ -49,12 +44,7 @@ public final class PublisherOnCompleteHandlerProxy {
     
                 @Override
                 public void onComplete() {
-                    if (handler == null) {
-                        hasRun = true;
-                    }
-                    else {
-                        handler.onComplete();
-                    }
+                    handler.onComplete();
                     downstream.onComplete();
                 }
             });
