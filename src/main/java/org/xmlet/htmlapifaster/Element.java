@@ -31,12 +31,14 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
       return new ThenableImpl<>(this.getVisitor(), new SupplierMemoize<>(this::self));
    }
 
-   default T dynamic(Consumer<T> consumer) {
+   /**
+    * @param consumer The continuation that consumes the element and a model.
+    * @return The same element that is passed to the consumer, corresponding to this element, i.e. self.
+    * @param <U> The type of the model.
+    */
+   default <U> T dynamic(BiConsumer<T, U> consumer) {
       T self = this.self();
-      ElementVisitor visitor = this.getVisitor();
-      visitor.visitOpenDynamic();
-      consumer.accept(self);
-      visitor.visitCloseDynamic();
+      this.getVisitor().visitDynamic(self, consumer);
       return self;
    }
 
