@@ -1,8 +1,10 @@
 package org.xmlet.htmlapifaster;
 
 import org.reactivestreams.Publisher;
+import org.xmlet.htmlapifaster.async.OnPublisherCompletion;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public abstract class ElementVisitor {
@@ -16,14 +18,16 @@ public abstract class ElementVisitor {
 
    public abstract <R> void visitComment(Text<? extends Element, R> var1);
 
-   public void visitOpenDynamic() {
-   }
+   /**
+    * @param element The HTML element from previous builder.
+    * @param consumer The continuation that consumes the element and a model.
+    * @param <E> The type of HTML element.
+    * @param <U> The type of the model.
+    */
+   public abstract <E extends Element, U> void visitDynamic(E element, BiConsumer<E, U> consumer);
 
-   public void visitCloseDynamic() {
-   }
-   
-   public abstract <E extends Element, T> void visitAsync(Supplier<E> element,
-                                                          BiConsumer<E, Publisher<T>> asyncAction, Publisher<T> obs);
+   public abstract <E extends Element, T> OnPublisherCompletion visitAsync(Supplier<E> element,
+                                                                           BiConsumer<E, Publisher<T>> asyncAction, Publisher<T> obs);
    public abstract <E extends Element> void visitThen(Supplier<E> elem);
 
    public <Z extends Element> void visitParentMeta(Meta<Z> var1) {
