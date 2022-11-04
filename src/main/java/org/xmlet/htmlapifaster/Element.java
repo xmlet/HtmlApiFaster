@@ -4,9 +4,6 @@ import org.reactivestreams.Publisher;
 import org.xmlet.htmlapifaster.async.AsyncElement;
 import org.xmlet.htmlapifaster.async.OnPublisherCompletion;
 import org.xmlet.htmlapifaster.async.PublisherOnCompleteHandlerProxy;
-import org.xmlet.htmlapifaster.async.SupplierMemoize;
-import org.xmlet.htmlapifaster.async.Thenable;
-import org.xmlet.htmlapifaster.async.ThenableImpl;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -24,11 +21,12 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
 
    Z getParent();
 
-   default <E> Thenable<T> async(Publisher<E> obs, BiConsumer<T, Publisher<E>> asyncAction) {
+   default <E> T async(Publisher<E> obs, BiConsumer<T, Publisher<E>> asyncAction) {
+      final T self = self();
       PublisherOnCompleteHandlerProxy.PublisherOnCompleteHandler<E> proxy = proxyPublisher(obs);
-      final OnPublisherCompletion publisherCompletion = this.getVisitor().visitAsync(this::self, asyncAction, proxy);
+      final OnPublisherCompletion publisherCompletion = this.getVisitor().visitAsync(self, asyncAction, proxy);
       proxy.addOnCompleteHandler(publisherCompletion);
-      return new ThenableImpl<>(this.getVisitor(), new SupplierMemoize<>(this::self));
+      return self;
    }
 
    /**

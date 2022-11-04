@@ -44,7 +44,7 @@ class ElementTest {
         @Test
         void given_parameters_when_async_then_visitor_receives_correct_reference() {
             
-            ArgumentCaptor<Supplier> supplierArgumentCaptor = ArgumentCaptor.forClass(Supplier.class);
+            ArgumentCaptor<Table> supplierArgumentCaptor = ArgumentCaptor.forClass(Table.class);
             final Publisher<String> stringPublisher = Flux.fromIterable(asList("1", "2", "3"));
             
             BiConsumer<Table<Body<Html<Element>>>, Publisher<String>> cons =
@@ -61,13 +61,13 @@ class ElementTest {
             
             table.async(stringPublisher, cons);
             
-            assertEquals(table, supplierArgumentCaptor.getValue().get());
+            assertEquals(table, supplierArgumentCaptor.getValue());
         }
         
         @Test
         void given_parameters_when_async_then_thenable_passes_correct_reference_when_calling_async() {
             
-            ArgumentCaptor<SupplierMemoize> supplierArgumentCaptor = ArgumentCaptor.forClass(SupplierMemoize.class);
+            ArgumentCaptor<Table> supplierArgumentCaptor = ArgumentCaptor.forClass(Table.class);
             final Publisher<String> stringPublisher = Flux.fromIterable(asList("1", "2", "3"));
             final Publisher<Integer> integerPublisher = Flux.range(1, 3);
             
@@ -81,7 +81,7 @@ class ElementTest {
                         .from(pub)
                         .subscribe(elem::text); // Subscribe to this Flux and request UNBOUNDED demand.
 
-            final Thenable<Table<Body<Html<Element>>>> thenable = new Html<>(visitor)
+            final Table<Body<Html<Element>>> thenable = new Html<>(visitor)
                     .body()
                     .table()
                     .async(stringPublisher, cons);
@@ -90,7 +90,7 @@ class ElementTest {
             
             thenable.async(integerPublisher, consBody);
             
-            assertTrue(supplierArgumentCaptor.getValue().get().getClass().isAssignableFrom(Table.class));
+            assertTrue(supplierArgumentCaptor.getValue().getClass().isAssignableFrom(Table.class));
         }
         
         @Test
@@ -107,14 +107,14 @@ class ElementTest {
             
             Function<Table<Body<Html<Element>>>,Html<Element>> bodyCont = elem -> elem.__().__();
     
-            final Thenable<Table<Body<Html<Element>>>> thenable = new Html<>(visitor)
+            final Table<Body<Html<Element>>> thenable = new Html<>(visitor)
                     .body()
                     .table()
                     .async(stringPublisher, cons);
     
             doNothing().when(visitor).visitThen(supplierArgumentCaptor.capture());
             
-            thenable.then(bodyCont);
+//            thenable.then(bodyCont);
             
             assertTrue(supplierArgumentCaptor.getValue().get().getClass().isAssignableFrom(Html.class));
         }
@@ -131,7 +131,7 @@ class ElementTest {
                 .map(nr -> new Student(nr, randomNameGenerator(toIntExact(nr))))
                 .take(5);
 
-        final Thenable<Element> thenable = new Html<>(visitor)
+        final Element thenable = new Html<>(visitor)
                 .body()
                 .div()
                 .p()
@@ -146,7 +146,7 @@ class ElementTest {
                         (tr, titlesObs) -> Flux
                         .from(titlesObs)
                         .subscribe(nr -> tr.th().text(nr).__())) // Subscribe to this Flux and request UNBOUNDED demand.
-                .then(tr -> tr.__().__().tbody())
+                .__().__().tbody()
                 .async(studentPublisher, (tbody, studentObs) -> Flux
                         .from(studentObs)
                         .doOnNext(student -> tbody.tr()
@@ -157,7 +157,7 @@ class ElementTest {
                                         .text(student.name)
                                     .__()
                                 .__()))
-                .then(tbody -> tbody.__().__().__().__().__());
+                .__().__().__().__().__();
         
         assertNotNull(thenable);
     }

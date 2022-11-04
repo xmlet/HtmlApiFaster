@@ -26,7 +26,7 @@ public abstract class ElementVisitor {
     */
    public abstract <E extends Element, U> void visitDynamic(E element, BiConsumer<E, U> consumer);
 
-   public abstract <E extends Element, T> OnPublisherCompletion visitAsync(Supplier<E> element,
+   public abstract <E extends Element, T> OnPublisherCompletion visitAsync(E element,
                                                                            BiConsumer<E, Publisher<T>> asyncAction, Publisher<T> obs);
    public abstract <E extends Element> void visitThen(Supplier<E> elem);
 

@@ -14,6 +14,6 @@ public interface AsyncElement<E extends Element> {
      * @param <T> The type that the {@link Publisher} contains
      * @return A {@link Thenable} as a result of the current asynchronous action happening
      */
-    <T> Thenable<E> async(Publisher<T> obs, BiConsumer<E, Publisher<T>> asyncAction);
+    <T> E async(Publisher<T> obs, BiConsumer<E, Publisher<T>> asyncAction);
     
 }
