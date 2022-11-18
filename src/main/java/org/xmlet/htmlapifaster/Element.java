@@ -2,13 +2,10 @@ package org.xmlet.htmlapifaster;
 
 import org.reactivestreams.Publisher;
 import org.xmlet.htmlapifaster.async.AsyncElement;
-import org.xmlet.htmlapifaster.async.OnPublisherCompletion;
-import org.xmlet.htmlapifaster.async.PublisherOnCompleteHandlerProxy;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-
-import static org.xmlet.htmlapifaster.async.PublisherOnCompleteHandlerProxy.proxyPublisher;
+import java.util.function.Function;
 
 public interface Element<T extends Element, Z extends Element> extends AsyncElement<T> {
    T self();
@@ -21,11 +18,9 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
 
    Z getParent();
 
-   default <E> T async(Publisher<E> obs, BiConsumer<T, Publisher<E>> asyncAction) {
+   default <M,E> T await(Function<M, Publisher<E>> objectMapper, BiConsumer<T, Publisher<E>> asyncAction) {
       final T self = self();
-      PublisherOnCompleteHandlerProxy.PublisherOnCompleteHandler<E> proxy = proxyPublisher(obs);
-      final OnPublisherCompletion publisherCompletion = this.getVisitor().visitAsync(self, asyncAction, proxy);
-      proxy.addOnCompleteHandler(publisherCompletion);
+      this.getVisitor().visitAwait(self, asyncAction, objectMapper);
       return self;
    }
 
