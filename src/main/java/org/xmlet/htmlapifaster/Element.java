@@ -18,9 +18,9 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
 
    Z getParent();
 
-   default <M,E> T await(Function<M, Publisher<E>> objectMapper, BiConsumer<T, Publisher<E>> asyncAction) {
+   default <M,E> T await(Class<E> clazz, Function<M, Publisher<E>> objectMapper, BiConsumer<T, Publisher<E>> asyncAction) {
       final T self = self();
-      this.getVisitor().visitAwait(self, asyncAction, objectMapper);
+      this.getVisitor().visitAwait(self, clazz, asyncAction, objectMapper);
       return self;
    }
 

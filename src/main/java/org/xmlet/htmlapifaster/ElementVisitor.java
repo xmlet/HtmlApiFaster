@@ -25,6 +25,7 @@ public abstract class ElementVisitor {
    public abstract <E extends Element, U> void visitDynamic(E element, BiConsumer<E, U> consumer);
 
    public abstract <E extends Element, M, T> void visitAwait(E element,
+                                                             Class<T> clazz,
                                                              BiConsumer<E, Publisher<T>> asyncAction,
                                                              Function<M, Publisher<T>> objectMapper);
 
