@@ -2,10 +2,10 @@ package org.xmlet.htmlapifaster;
 
 import org.reactivestreams.Publisher;
 import org.xmlet.htmlapifaster.async.AsyncElement;
+import org.xmlet.htmlapifaster.async.OnCompletion;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public interface Element<T extends Element, Z extends Element> extends AsyncElement<T> {
    T self();
@@ -18,9 +18,10 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
 
    Z getParent();
 
-   default <M,E> T await(Class<E> clazz, Function<M, Publisher<E>> objectMapper, BiConsumer<T, Publisher<E>> asyncAction) {
+   @Override
+   default T await(BiConsumer<T, OnCompletion> asyncAction) {
       final T self = self();
-      this.getVisitor().visitAwait(self, clazz, asyncAction, objectMapper);
+      this.getVisitor().visitAwait(self, asyncAction);
       return self;
    }
 

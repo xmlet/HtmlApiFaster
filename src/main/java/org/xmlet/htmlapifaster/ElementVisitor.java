@@ -1,9 +1,9 @@
 package org.xmlet.htmlapifaster;
 
 import org.reactivestreams.Publisher;
+import org.xmlet.htmlapifaster.async.OnCompletion;
 
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 public abstract class ElementVisitor {
    public abstract void visitElement(Element var1);
@@ -24,10 +24,7 @@ public abstract class ElementVisitor {
     */
    public abstract <E extends Element, U> void visitDynamic(E element, BiConsumer<E, U> consumer);
 
-   public abstract <E extends Element, M, T> void visitAwait(E element,
-                                                             Class<T> clazz,
-                                                             BiConsumer<E, Publisher<T>> asyncAction,
-                                                             Function<M, Publisher<T>> objectMapper);
+   public abstract <E extends Element> void visitAwait(E element, BiConsumer<E, OnCompletion> asyncAction);
 
    public <Z extends Element> void visitParentMeta(Meta<Z> var1) {
       this.visitParent(var1);
