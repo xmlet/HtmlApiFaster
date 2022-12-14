@@ -1,7 +1,7 @@
 package org.xmlet.htmlapifaster;
 
-import org.reactivestreams.Publisher;
 import org.xmlet.htmlapifaster.async.AsyncElement;
+import org.xmlet.htmlapifaster.async.AwaitConsumer;
 import org.xmlet.htmlapifaster.async.OnCompletion;
 
 import java.util.function.BiConsumer;
@@ -19,7 +19,7 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
    Z getParent();
 
    @Override
-   default T await(BiConsumer<T, OnCompletion> asyncAction) {
+   default <M> T await(AwaitConsumer<T,M> asyncAction) {
       final T self = self();
       this.getVisitor().visitAwait(self, asyncAction);
       return self;
