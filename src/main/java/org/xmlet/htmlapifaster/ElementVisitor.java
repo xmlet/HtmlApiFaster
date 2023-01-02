@@ -1,10 +1,8 @@
 package org.xmlet.htmlapifaster;
 
 import org.xmlet.htmlapifaster.async.AwaitConsumer;
-import org.xmlet.htmlapifaster.async.OnCompletion;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public abstract class ElementVisitor {
    public abstract void visitElement(Element var1);

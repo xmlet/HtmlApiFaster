@@ -2,7 +2,6 @@ package org.xmlet.htmlapifaster;
 
 import org.xmlet.htmlapifaster.async.AsyncElement;
 import org.xmlet.htmlapifaster.async.AwaitConsumer;
-import org.xmlet.htmlapifaster.async.OnCompletion;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -18,6 +17,12 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
 
    Z getParent();
 
+   /**
+    * Executes an async operation on a certain model
+    * @param asyncAction The async action to be executed on a element and model
+    * @return The processed element
+    * @param <M> Generic type fo the received model
+    */
    @Override
    default <M> T await(AwaitConsumer<T,M> asyncAction) {
       final T self = self();
