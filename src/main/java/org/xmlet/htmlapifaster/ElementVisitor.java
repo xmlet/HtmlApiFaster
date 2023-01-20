@@ -1,11 +1,8 @@
 package org.xmlet.htmlapifaster;
 
-import org.reactivestreams.Publisher;
-import org.xmlet.htmlapifaster.async.OnPublisherCompletion;
+import org.xmlet.htmlapifaster.async.AwaitConsumer;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public abstract class ElementVisitor {
    public abstract void visitElement(Element var1);
@@ -26,9 +23,7 @@ public abstract class ElementVisitor {
     */
    public abstract <E extends Element, U> void visitDynamic(E element, BiConsumer<E, U> consumer);
 
-   public abstract <E extends Element, T> OnPublisherCompletion visitAsync(Supplier<E> element,
-                                                                           BiConsumer<E, Publisher<T>> asyncAction, Publisher<T> obs);
-   public abstract <E extends Element> void visitThen(Supplier<E> elem);
+   public abstract <M, E extends Element> void visitAwait(E element, AwaitConsumer<E, M> asyncAction);
 
    public <Z extends Element> void visitParentMeta(Meta<Z> var1) {
       this.visitParent(var1);
@@ -1763,7 +1758,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeAsync(String async) {
-      this.visitAttribute("async", async);
+      this.visitAttribute("await", async);
    }
 
    public void visitAttributeReversed(String reversed) {

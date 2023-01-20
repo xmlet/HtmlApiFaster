@@ -1,17 +1,10 @@
 package org.xmlet.htmlapifaster;
 
-import org.reactivestreams.Publisher;
 import org.xmlet.htmlapifaster.async.AsyncElement;
-import org.xmlet.htmlapifaster.async.OnPublisherCompletion;
-import org.xmlet.htmlapifaster.async.PublisherOnCompleteHandlerProxy;
-import org.xmlet.htmlapifaster.async.SupplierMemoize;
-import org.xmlet.htmlapifaster.async.Thenable;
-import org.xmlet.htmlapifaster.async.ThenableImpl;
+import org.xmlet.htmlapifaster.async.AwaitConsumer;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-
-import static org.xmlet.htmlapifaster.async.PublisherOnCompleteHandlerProxy.proxyPublisher;
 
 public interface Element<T extends Element, Z extends Element> extends AsyncElement<T> {
    T self();
@@ -24,11 +17,17 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
 
    Z getParent();
 
-   default <E> Thenable<T> async(Publisher<E> obs, BiConsumer<T, Publisher<E>> asyncAction) {
-      PublisherOnCompleteHandlerProxy.PublisherOnCompleteHandler<E> proxy = proxyPublisher(obs);
-      final OnPublisherCompletion publisherCompletion = this.getVisitor().visitAsync(this::self, asyncAction, proxy);
-      proxy.addOnCompleteHandler(publisherCompletion);
-      return new ThenableImpl<>(this.getVisitor(), new SupplierMemoize<>(this::self));
+   /**
+    * Executes an async operation on a certain model
+    * @param asyncAction The async action to be executed on a element and model
+    * @return The processed element
+    * @param <M> Generic type fo the received model
+    */
+   @Override
+   default <M> T await(AwaitConsumer<T,M> asyncAction) {
+      final T self = self();
+      this.getVisitor().visitAwait(self, asyncAction);
+      return self;
    }
 
    /**
