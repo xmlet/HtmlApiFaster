@@ -277,11 +277,11 @@ public class BinderExample{
 
 ## Changelog
 
-### 1.0.13
+### 1.0.12
 
-* Replaced `async()` method by `await()`, which can deal with any type of asynchronous API.
+* Replaced `async()` method by `await()`, which can deal with any type of asynchronous API, ond not only `Observable`.
 * New `interface AsyncElement<E extends Element> {<M> E await(AwaitConsumer<E,M> asyncAction);}`
-* NEw `interface AwaitConsumer<T,M> { void accept(T first, M model, OnCompletion third);`
+* New `interface AwaitConsumer<T,M> { void accept(T first, M model, OnCompletion third);`
 * Changed implementation for `dynamic()` that uses a singe `visitDynamic()` instead of two visits
   for beginning and end. 
 * Upgrade xsdAsmFaster to 1.0.10 to fix problem on duplicated packages in camelcase.
