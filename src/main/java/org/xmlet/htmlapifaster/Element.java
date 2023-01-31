@@ -1,10 +1,7 @@
 package org.xmlet.htmlapifaster;
 
-import io.reactivex.rxjava3.core.Observable;
 import org.xmlet.htmlapifaster.async.AsyncElement;
-import org.xmlet.htmlapifaster.async.SupplierMemoize;
-import org.xmlet.htmlapifaster.async.Thenable;
-import org.xmlet.htmlapifaster.async.ThenableImpl;
+import org.xmlet.htmlapifaster.async.AwaitConsumer;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -19,20 +16,28 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
    Z __();
 
    Z getParent();
-   
-   default <E> Thenable<T> async(Observable<E> obs, BiConsumer<T, Observable<E>> asyncAction) {
-      this.getVisitor().visitAsync(this::self, asyncAction, obs);
-      return new ThenableImpl<>(this.getVisitor(),
-              new SupplierMemoize<>(this::self),
-              obs);
+
+   /**
+    * Executes an async operation on a certain model
+    * @param asyncAction The async action to be executed on a element and model
+    * @return The processed element
+    * @param <M> Generic type fo the received model
+    */
+   @Override
+   default <M> T await(AwaitConsumer<T,M> asyncAction) {
+      final T self = self();
+      this.getVisitor().visitAwait(self, asyncAction);
+      return self;
    }
-   
-   default T dynamic(Consumer<T> consumer) {
+
+   /**
+    * @param consumer The continuation that consumes the element and a model.
+    * @return The same element that is passed to the consumer, corresponding to this element, i.e. self.
+    * @param <U> The type of the model.
+    */
+   default <U> T dynamic(BiConsumer<T, U> consumer) {
       T self = this.self();
-      ElementVisitor visitor = this.getVisitor();
-      visitor.visitOpenDynamic();
-      consumer.accept(self);
-      visitor.visitCloseDynamic();
+      this.getVisitor().visitDynamic(self, consumer);
       return self;
    }
 
