@@ -1033,6 +1033,11 @@
 
     <xsd:simpleType name="scriptType">
         <xsd:restriction base="xsd:string">
+            <!-- Next rules according to https://www.rfc-editor.org/rfc/rfc9239.html -->
+            <xsd:enumeration value="importmap" />
+            <xsd:enumeration value="module" />
+            <xsd:enumeration value="speculationrules" />
+            <!-- Next are Legacy JavaScript MIME types -->
             <xsd:enumeration value="application/ecmascript" />
             <xsd:enumeration value="application/javascript" />
             <xsd:enumeration value="application/x-javascript" />
