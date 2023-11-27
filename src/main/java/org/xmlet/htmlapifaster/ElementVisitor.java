@@ -9,6 +9,14 @@ public abstract class ElementVisitor {
 
    public abstract void visitAttribute(String var1, String var2);
 
+   /**
+    * To distinguish boolean attributes from others.
+    *
+    * @param name Attribute name
+    * @param value Attribute value
+    */
+   public abstract void visitAttributeBoolean(String name, String value);
+
    public abstract void visitParent(Element var1);
 
    public abstract <R> void visitText(Text<? extends Element, R> var1);
@@ -966,7 +974,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeIsmap(String ismap) {
-      this.visitAttribute("ismap", ismap);
+      this.visitAttributeBoolean("ismap", ismap);
    }
 
    public void visitAttributeOnmessage(String onmessage) {
@@ -978,7 +986,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeReadonly(String readonly) {
-      this.visitAttribute("readonly", readonly);
+      this.visitAttributeBoolean("readonly", readonly);
    }
 
    public void visitAttributeOnselect(String onselect) {
@@ -998,7 +1006,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeAllowfullscreen(String allowfullscreen) {
-      this.visitAttribute("allowfullscreen", allowfullscreen);
+      this.visitAttributeBoolean("allowfullscreen", allowfullscreen);
    }
 
    public void visitAttributeMaxlength(String maxlength) {
@@ -1066,7 +1074,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeDefault(String var1) {
-      this.visitAttribute("default", var1);
+      this.visitAttributeBoolean("default", var1);
    }
 
    public void visitAttributeMin(String min) {
@@ -1086,7 +1094,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeDisabled(String disabled) {
-      this.visitAttribute("disabled", disabled);
+      this.visitAttributeBoolean("disabled", disabled);
    }
 
    public void visitAttributeUsemap(String usemap) {
@@ -1150,7 +1158,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeOpen(String open) {
-      this.visitAttribute("open", open);
+      this.visitAttributeBoolean("open", open);
    }
 
    public void visitAttributeOnemptied(String onemptied) {
@@ -1174,11 +1182,11 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeTypemustmatch(String typemustmatch) {
-      this.visitAttribute("typemustmatch", typemustmatch);
+      this.visitAttributeBoolean("typemustmatch", typemustmatch);
    }
 
    public void visitAttributeLoop(String loop) {
-      this.visitAttribute("loop", loop);
+      this.visitAttributeBoolean("loop", loop);
    }
 
    public void visitAttributeRowspan(String rowspan) {
@@ -1226,7 +1234,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeDefer(String defer) {
-      this.visitAttribute("defer", defer);
+      this.visitAttributeBoolean("defer", defer);
    }
 
    public void visitAttributeMinlength(String minlength) {
@@ -1238,7 +1246,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeHidden(String hidden) {
-      this.visitAttribute("hidden", hidden);
+      this.visitAttributeBoolean("hidden", hidden);
    }
 
    public void visitAttributeOnerror(String onerror) {
@@ -1302,7 +1310,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeMultiple(String multiple) {
-      this.visitAttribute("multiple", multiple);
+      this.visitAttributeBoolean("multiple", multiple);
    }
 
    public void visitAttributeOnunload(String onunload) {
@@ -1366,7 +1374,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeRequired(String required) {
-      this.visitAttribute("required", required);
+      this.visitAttributeBoolean("required", required);
    }
 
    public void visitAttributeOncanplaythrough(String oncanplaythrough) {
@@ -1482,7 +1490,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeNovalidate(String novalidate) {
-      this.visitAttribute("novalidate", novalidate);
+      this.visitAttributeBoolean("novalidate", novalidate);
    }
 
    public void visitAttributeFormenctype(String formenctype) {
@@ -1502,7 +1510,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeMuted(String muted) {
-      this.visitAttribute("muted", muted);
+      this.visitAttributeBoolean("muted", muted);
    }
 
    public void visitAttributeCoords(String coords) {
@@ -1610,7 +1618,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeChecked(String checked) {
-      this.visitAttribute("checked", checked);
+      this.visitAttributeBoolean("checked", checked);
    }
 
    public void visitAttributeOnbeforeprint(String onbeforeprint) {
@@ -1618,7 +1626,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeSelected(String selected) {
-      this.visitAttribute("selected", selected);
+      this.visitAttributeBoolean("selected", selected);
    }
 
    public void visitAttributeBorder(String border) {
@@ -1662,7 +1670,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeFormnovalidate(String formnovalidate) {
-      this.visitAttribute("formnovalidate", formnovalidate);
+      this.visitAttributeBoolean("formnovalidate", formnovalidate);
    }
 
    public void visitAttributeOnabort(String onabort) {
@@ -1734,7 +1742,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeAutofocus(String autofocus) {
-      this.visitAttribute("autofocus", autofocus);
+      this.visitAttributeBoolean("autofocus", autofocus);
    }
 
    public void visitAttributeRows(String rows) {
@@ -1746,7 +1754,7 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeAllowpaymentrequest(String allowpaymentrequest) {
-      this.visitAttribute("allowpaymentrequest", allowpaymentrequest);
+      this.visitAttributeBoolean("allowpaymentrequest", allowpaymentrequest);
    }
 
    public void visitAttributeRowgroup(String rowgroup) {
@@ -1758,10 +1766,10 @@ public abstract class ElementVisitor {
    }
 
    public void visitAttributeAsync(String async) {
-      this.visitAttribute("await", async);
+      this.visitAttributeBoolean("await", async);
    }
 
    public void visitAttributeReversed(String reversed) {
-      this.visitAttribute("reversed", reversed);
+      this.visitAttributeBoolean("reversed", reversed);
    }
 }

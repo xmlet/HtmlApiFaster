@@ -3,6 +3,9 @@ package org.xmlet.htmlapifaster;
 import org.xmlet.xsdasmfaster.classes.infrastructure.EnumInterface;
 
 public enum EnumTypeScriptType implements EnumInterface<String> {
+   IMPORTMAP(String.valueOf("importmap")),
+   MODULE(String.valueOf("module")),
+   SPECULATIONRULES(String.valueOf("speculationrules")),
    APPLICATION_ECMASCRIPT(String.valueOf("application/ecmascript")),
    APPLICATION_JAVASCRIPT(String.valueOf("application/javascript")),
    APPLICATION_X_JAVASCRIPT(String.valueOf("application/x-javascript")),
