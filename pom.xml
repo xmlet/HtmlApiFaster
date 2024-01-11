@@ -3,7 +3,7 @@
 
     <groupId>com.github.xmlet</groupId>
     <artifactId>htmlApiFaster</artifactId>
-    <version>1.0.15-SNAPSHOT</version>
+    <version>1.0.15</version>
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
@@ -168,7 +168,7 @@
         <connection>scm:git:git@github.com:xmlet/HtmlApiFaster.git</connection>
         <developerConnection>scm:git:git@github.com:xmlet/HtmlApiFaster.git</developerConnection>
         <url>git@github.com:xmlet/HtmlApiFaster.git</url>
-        <tag>htmlApiFaster-1.0.11</tag>
+        <tag>htmlApiFaster-1.0.15</tag>
     </scm>
     <distributionManagement>
         <snapshotRepository>
