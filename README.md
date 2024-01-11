@@ -40,7 +40,7 @@
 <dependency>
     <groupId>com.github.xmlet</groupId>
     <artifactId>htmlApiFaster</artifactId>
-    <version>1.0.12</version>
+    <version>1.0.15</version>
 </dependency>
 ``` 
 
@@ -276,6 +276,10 @@ public class BinderExample{
 </div>
 
 ## Changelog
+
+### 1.0.15
+
+* New attributes to globalEventAttributes
 
 ### 1.0.12
 
