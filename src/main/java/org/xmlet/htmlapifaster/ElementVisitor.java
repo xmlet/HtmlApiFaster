@@ -1073,6 +1073,10 @@ public abstract class ElementVisitor {
       this.visitAttribute("colspan", colspan);
    }
 
+   public void visitAttributeOnsort(String onsort) {
+      this.visitAttribute("onsort", onsort);
+   }
+
    public void visitAttributeDefault(String var1) {
       this.visitAttributeBoolean("default", var1);
    }
@@ -1217,6 +1221,10 @@ public abstract class ElementVisitor {
       this.visitAttribute("rev", rev);
    }
 
+   public void visitAttributeOnautocompleteerror(String onautocompleteerror) {
+      this.visitAttribute("onautocompleteerror", onautocompleteerror);
+   }
+
    public void visitAttributeList(String list) {
       this.visitAttribute("list", list);
    }
@@ -1239,6 +1247,10 @@ public abstract class ElementVisitor {
 
    public void visitAttributeMinlength(String minlength) {
       this.visitAttribute("minlength", minlength);
+   }
+
+   public void visitAttributeOnautocomplete(String onautocomplete) {
+      this.visitAttribute("onautocomplete", onautocomplete);
    }
 
    public void visitAttributeHttpEquiv(String httpEquiv) {
@@ -1459,6 +1471,10 @@ public abstract class ElementVisitor {
 
    public void visitAttributeCharset(String charset) {
       this.visitAttribute("charset", charset);
+   }
+
+   public void visitAttributeOncontextmenu(String oncontextmenu) {
+      this.visitAttribute("oncontextmenu", oncontextmenu);
    }
 
    public void visitAttributeOnmousemove(String onmousemove) {

@@ -1,6 +1,26 @@
 package org.xmlet.htmlapifaster;
 
 public interface GlobalEventAttributes<T extends Element<T, Z>, Z extends Element> extends CustomAttributeGroup<T, Z> {
+   default T attrOnautocomplete(String attrOnautocomplete) {
+      this.getVisitor().visitAttributeOnautocomplete(attrOnautocomplete);
+      return this.self();
+   }
+
+   default T attrOnautocompleteerror(String attrOnautocompleteerror) {
+      this.getVisitor().visitAttributeOnautocompleteerror(attrOnautocompleteerror);
+      return this.self();
+   }
+
+   default T attrOncontextmenu(String attrOncontextmenu) {
+      this.getVisitor().visitAttributeOncontextmenu(attrOncontextmenu);
+      return this.self();
+   }
+
+   default T attrOnsort(String attrOnsort) {
+      this.getVisitor().visitAttributeOnsort(attrOnsort);
+      return this.self();
+   }
+
    default T attrOnabort(String attrOnabort) {
       this.getVisitor().visitAttributeOnabort(attrOnabort);
       return this.self();

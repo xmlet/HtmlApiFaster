@@ -1256,6 +1256,10 @@
     <!-- ************************* -->
 
     <xsd:attributeGroup name="globalEventAttributes" >
+        <xsd:attribute name="onautocomplete" type="xsd:string"/>
+        <xsd:attribute name="onautocompleteerror" type="xsd:string"/>
+        <xsd:attribute name="oncontextmenu" type="xsd:string"/>
+        <xsd:attribute name="onsort" type="xsd:string"/>
         <xsd:attribute name="onabort" type="xsd:string"/>
         <xsd:attribute name="onauxclick" type="xsd:string"/>
         <xsd:attribute name="onblur" type="xsd:string"/>
