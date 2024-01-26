@@ -18,6 +18,16 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
    Z getParent();
 
    /**
+    * To distinguish from text() that escapes HTML by default.
+    * This raw() acts like text() but keeping text as it is.
+    */
+   default <R> T raw(R text) {
+      this.getVisitor().visitRaw(new Text(this.self(), this.getVisitor(), text));
+      return this.self();
+   }
+
+
+   /**
     * Executes an async operation on a certain model
     * @param asyncAction The async action to be executed on a element and model
     * @return The processed element

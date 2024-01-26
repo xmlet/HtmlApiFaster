@@ -21,6 +21,12 @@ public abstract class ElementVisitor {
 
    public abstract <R> void visitText(Text<? extends Element, R> var1);
 
+   /**
+    * To distinguish from text() that escapes HTML by default.
+    * This raw() acts like text() but keeping text as it is.
+    */
+   public abstract <R> void visitRaw(Text<? extends Element, R> txt);
+
    public abstract <R> void visitComment(Text<? extends Element, R> var1);
 
    /**
