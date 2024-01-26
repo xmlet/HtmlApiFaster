@@ -40,7 +40,7 @@
 <dependency>
     <groupId>com.github.xmlet</groupId>
     <artifactId>htmlApiFaster</artifactId>
-    <version>1.0.15</version>
+    <version>1.0.16</version>
 </dependency>
 ``` 
 
@@ -276,6 +276,11 @@ public class BinderExample{
 </div>
 
 ## Changelog
+
+### 1.0.16
+
+* New `raw()` method in `Element` to distinguish from `text()`. The `visitRaw()` should keep text as it is, while `visitText()` should **escape** HTML.
+
 
 ### 1.0.15
 
