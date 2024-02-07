@@ -1,12 +1,13 @@
 package org.xmlet.htmlapifaster;
 
+import org.jetbrains.annotations.NotNull;
 import org.xmlet.htmlapifaster.async.AsyncElement;
 import org.xmlet.htmlapifaster.async.AwaitConsumer;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-public interface Element<T extends Element, Z extends Element> extends AsyncElement<T> {
+public interface Element<T extends Element, Z extends Element> extends AsyncElement<T>, ElementExtensions<Element<T, Z>> {
    T self();
 
    ElementVisitor getVisitor();
@@ -16,6 +17,18 @@ public interface Element<T extends Element, Z extends Element> extends AsyncElem
    Z __();
 
    Z getParent();
+
+   @Override
+   default  T addTextFromkotlin(@NotNull String txt) {
+      this.getVisitor().visitRaw(new Text(this.self(), this.getVisitor(), txt));
+      return this.self();
+   }
+
+   @NotNull
+   @Override
+   default Element<T, Z> unaryPlus(@NotNull String $this$unaryPlus) {
+      return addTextFromkotlin($this$unaryPlus);
+   }
 
    /**
     * To distinguish from text() that escapes HTML by default.
