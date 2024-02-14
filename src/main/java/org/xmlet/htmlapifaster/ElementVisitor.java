@@ -39,6 +39,8 @@ public abstract class ElementVisitor {
 
    public abstract <M, E extends Element> void visitAwait(E element, AwaitConsumer<E, M> asyncAction);
 
+   public abstract <M, E extends Element> void visitSuspending(E element, SuspendConsumer<E, M> suspendAction);
+
    public <Z extends Element> void visitParentMeta(Meta<Z> var1) {
       this.visitParent(var1);
    }
