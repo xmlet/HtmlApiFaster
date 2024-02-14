@@ -40,7 +40,7 @@
 <dependency>
     <groupId>com.github.xmlet</groupId>
     <artifactId>htmlApiFaster</artifactId>
-    <version>1.0.16</version>
+    <version>1.0.17</version>
 </dependency>
 ``` 
 
@@ -276,6 +276,12 @@ public class BinderExample{
 </div>
 
 ## Changelog
+
+### 1.0.17
+
+* New Kotlin `SuspendConsumer` with `Element` as receiver of the `accept()` suspending function.
+* New `visitSuspending()` that deals with a `suspend` function of `SuspendConsumer`.
+* Element extension for String unary plus to enable `+"some text"` in element builders.
 
 ### 1.0.16
 
